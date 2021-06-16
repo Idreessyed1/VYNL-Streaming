@@ -1,0 +1,16 @@
+#PyCharm settings
+/.idea
+
+#Python cache
+/python_files/__pycache__
+
+#Project settings
+main.pyproject.user
+
+#Images
+/images/temp_image.jpg
+/images/thriller.jpg
+
+#SQL Database
+VYNL_Database
+
