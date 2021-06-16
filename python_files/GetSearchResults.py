@@ -1,3 +1,4 @@
+from python_files import config
 from googleapiclient.discovery import build
 from python_files.SearchResult import SearchResult
 
@@ -9,7 +10,7 @@ class GetSearchResults:
     """
 
     def __init__(self):
-        self.API_KEY = 'AIzaSyC4RokP4I0KYhhUU3LCbM-7ll0dZEcgpHA'
+        self.API_KEY = config.YT_API_KEY
         self.SERVICE = 'youtube'
         self.API_VERSION = 'v3'
         self.youtube = build(self.SERVICE, self.API_VERSION, developerKey=self.API_KEY)

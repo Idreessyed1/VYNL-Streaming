@@ -4,6 +4,9 @@
 #Python cache
 /python_files/__pycache__
 
+#Python files
+/python_files/config.py
+
 #Project settings
 main.pyproject.user
 
