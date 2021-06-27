@@ -7,29 +7,29 @@ class Stream:
 
     def __init__(self, yt_title, link, audio_url, track, artist, album, album_art, length, year, colors):
         self.yt_title = yt_title
-        #print(yt_title)
+        print(yt_title)
         self.link = link
-        #print(link)
+        # print(link)
         self.audio_url = audio_url
-        print(audio_url)
+        # print(audio_url)
         self.track = track
         # print(track)
         self.artist = artist
-        print(artist)
+        # print(artist)
         self.album = album
-        print(album)
+        # print(album)
         self.album_art = album_art
-        print(album_art)
+        # print(album_art)
         self.length = length
-        print(length)
+        # print(length)
         self.year = year
-        print(year)
+        # print(year)
         self.main_color = colors[0]
-        print(self.main_color)
+        # print(self.main_color)
         self.second_color = colors[1]
-        print(self.second_color)
+        # print(self.second_color)
         self.third_color = colors[2]
-        print(self.third_color)
+        #print(self.third_color)
 
     def get_title(self):
         return self.yt_title
