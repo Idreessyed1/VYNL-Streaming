@@ -28,19 +28,17 @@ class StreamPlayerVLC:
         self.player.play()
         while self.player.is_playing() == 0:
             pass
-        # CHECK OTHER POSSIBILITY -> while: self.player.is_playing() == 1:
         while self.running:
+            time.sleep(1)
             if self.player.is_playing() == 0 and not self.paused:
                 break
-        print("OUT OF START METHOD", threading.get_ident())
+        # print("OUT OF START METHOD", threading.get_ident())
 
     def pause_audio(self):
         if not self.paused:
             self.paused = True
-            print(self.paused)
         else:
             self.paused = False
-            print(self.paused)
         self.player.pause()
 
     def stop_stream(self):
