@@ -95,7 +95,6 @@ class MainWindow(QObject):
 
     @Slot(int)
     def play_selected(self, pos):
-        print("%%%%%%%%%%%%%%%%%%%% %%%%%%%%%%%%%%%%")
         self.stream_queue.play_selected(pos)
 
     @Slot(str)
