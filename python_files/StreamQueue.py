@@ -1,5 +1,5 @@
 from python_files.StreamPlayerVLC import StreamPlayerVLC
-
+import time
 
 class StreamQueue:
 
@@ -7,6 +7,7 @@ class StreamQueue:
         self.stream_queue = []
         self.stream_player_vlc = StreamPlayerVLC()
         self.first_stream = True
+        self.last_stream = False
         self.curr_pos = 0  # Tracks the position of the current stream in the queue
         self.main_instance = main_instance
 
@@ -16,25 +17,73 @@ class StreamQueue:
         """
         while self.curr_pos < self.get_size():
             self.first_stream = False
+            self.last_stream = False
+            self.selected_stream = False
             self.main_instance.update_player()
             self.play_stream(self.get_stream(self.curr_pos))
+            # On last stream, wait for user to select; next (starts from the beginning) or previous
             if self.curr_pos == self.get_size() - 1:
-                self.curr_pos = 0
-                while not self.first_stream:
-                    pass
+                size = self.get_size() - 1
+                while True:  # Inside WAIT
+                    if size + 1 == self.get_size() - 1:  # User adds a stream -> play next (added stream)
+                        self.curr_pos += 1
+                        break
+                    if self.selected_stream:  # Selected a stream from queue - > play that stream
+                        self.curr_pos += 1
+                        break
+                    if self.first_stream:  # Clicked next -> play from beginning
+                        self.curr_pos = 0
+                        break
+                    if self.last_stream:  # Clicked previous -> repeat stream
+                        break
+                    time.sleep(1)
             else:
                 self.curr_pos += 1
-        self.first_stream = True
 
     def play_stream(self, stream):
         self.stream_player_vlc.start(stream)
+
+    def next_stream(self):
+        if self.curr_pos == self.get_size() - 1:
+            try:
+                if self.stream_player_vlc.get_is_playing() == 1:
+                    self.curr_pos = -1
+                    self.stream_player_vlc.stop_stream()
+                else:
+                    self.first_stream = True
+            except:
+                print("No stream playing")
+        else:
+            self.stream_player_vlc.stop_stream()
+
+    def previous_stream(self):
+        """
+        For going to previous stream
+        if: The first stream in the queue -> Restart stream
+        elif: On last stream and stream is not playing
+        elif: The stream has played for less than 5 seconds -> repeat
+        else: Go to previous stream
+        """
+        if self.curr_pos <= 0 or self.get_size() == 1:
+            self.curr_pos = -1
+        elif self.curr_pos == self.get_size() - 1 and self.stream_player_vlc.get_is_playing() == 0:
+            self.last_stream = True
+        elif self.stream_player_vlc.get_time_milli() > 5000:
+            self.curr_pos -= 1
+        else:
+            self.curr_pos -= 2
+        self.stream_player_vlc.stop_stream()
 
     def stop_stream(self):
         self.stream_player_vlc.stop_stream()
 
     def play_selected(self, pos):
-        self.curr_pos = pos - 1
-        self.stream_player_vlc.stop_stream()
+        if self.curr_pos == self.get_size() - 1:
+            self.curr_pos = pos - 1
+            self.selected_stream = True
+        else:
+            self.curr_pos = pos - 1
+            self.stream_player_vlc.stop_stream()
 
     def add_to_queue(self, stream, pos=None):
         if pos is None:
@@ -44,12 +93,10 @@ class StreamQueue:
 
     def remove(self, pos):
         if pos <= self.curr_pos:
-            print(True)
-            del(self.stream_queue[pos])
+            del (self.stream_queue[pos])
             self.curr_pos -= 1
         else:
-            print(False)
-            del(self.stream_queue[pos])
+            del (self.stream_queue[pos])
         # print("Remove:", pos)
         # print("Re Size", self.get_size())
 
@@ -82,28 +129,6 @@ class StreamQueue:
     def pause_stream(self):
         self.stream_player_vlc.pause_audio()
 
-    def next_stream(self):
-        if self.curr_pos == self.get_size() - 1:
-            print("Currently on the last stream in the queue!")
-            self.first_stream = True
-        else:
-            self.stream_player_vlc.stop_stream()
-
-    def previous_stream(self):
-        """
-        For going to previous stream
-        if -> Checks if its the first stream in the queue
-        elif -> If the stream has played for less than 5 seconds repeat
-        else -> Go to previous stream
-        """
-        if self.curr_pos <= 0 or self.get_size() == 1:
-            self.curr_pos = -1
-        elif self.stream_player_vlc.get_time_milli() > 5000:
-            self.curr_pos -= 1
-        else:
-            self.curr_pos -= 2
-        self.stream_player_vlc.stop_stream()
-
     def get_queue(self):
         return self.stream_queue
 
@@ -121,4 +146,3 @@ class StreamQueue:
             return self.stream_player_vlc.get_percentage()
         except:
             return 0
-
