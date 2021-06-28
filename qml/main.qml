@@ -1028,13 +1028,13 @@ Window {
                 Text {
                     id: controlsTxt
                     x: 100
-                    y: 1000
-                    width: 226
-                    height: 52
+                    y: 1020
+                    width: 269
+                    height: 60
                     color: secondaryColor
                     text: qsTr("Controls")
                     elide: Text.ElideNone
-                    font.pixelSize: 40
+                    font.pixelSize: 45
                     font.capitalization: Font.AllUppercase
                     font.family: proximaNovaBold.name
                     fontSizeMode: Text.VerticalFit
@@ -1060,12 +1060,85 @@ Window {
                 }
 
                 Column {
-                    id: column
+                    id: controlColumn
                     x: 100
                     y: 1075
                     width: 500
                     height: 72
+
+                    MiniButton {
+                        id: controlFavBtn
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        regImg: "star_icon.png"
+                        pressedImg: "star_icon_pressed.png"
+                        size: 40
+                        colorDefault: secondaryColor
+                        colorMouseOver: thirdColor
+                        colorMousePressed: thirdColor
+                        //onClicked: con.f
+                    }
+
+                    MiniButton {
+                        id: controlPlaylistBtn
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: controlFavBtn.right
+                        anchors.leftMargin: 40
+                        regImg: "playlist_icon.svg"
+                        pressedImg: "playlist_icon.svg"
+                        size: 40
+                        colorDefault: secondaryColor
+                        colorMouseOver: thirdColor
+                        colorMousePressed: thirdColor
+                        //onClicked: con.f
+                    }
+
+                    MiniButton {
+                        id: controlDownloadBtn
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: controlPlaylistBtn.right
+                        anchors.leftMargin: 40
+                        regImg: "downloadIcon.png"
+                        pressedImg: "downloadIcon.png"
+                        size: 40
+                        colorDefault: secondaryColor
+                        colorMouseOver: thirdColor
+                        colorMousePressed: thirdColor
+                        //onClicked: con.f
+                    }
+
+                    MiniButton {
+                        id: controlQueueBtn
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: controlDownloadBtn.right
+                        anchors.leftMargin: 40
+                        regImg: "queue_icon.svg"
+                        pressedImg: "queue_icon.svg"
+                        size: 40
+                        colorDefault: secondaryColor
+                        colorMouseOver: thirdColor
+                        colorMousePressed: thirdColor
+                        //onClicked: con.f
+                    }
+
+                    MiniButton {
+                        id: controlLyricsBtn
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: controlQueueBtn.right
+                        anchors.leftMargin: 40
+                        regImg: "lyrics_icon.svg"
+                        pressedImg: "lyrics_icon.svg"
+                        size: 40
+                        colorDefault: secondaryColor
+                        colorMouseOver: thirdColor
+                        colorMousePressed: thirdColor
+                        //onClicked: con.f
+                    }
+
                 }
+
+
 
             }
 
