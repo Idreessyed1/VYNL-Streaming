@@ -56,7 +56,7 @@ class MainWindow(QObject):
         """
         Updates stream playback progress in the UI (time and slider)
         """
-        self.setProgress.emit(self.stream_queue.get_current_time(), self.stream_queue.get_percentage())
+        self.setProgress.emit(self.stream_queue.get_current_time_formatted(), self.stream_queue.get_percentage())
 
     @Slot(int)
     def add_to_queue(self, index):

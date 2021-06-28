@@ -68,7 +68,7 @@ class StreamQueue:
             self.curr_pos = -1
         elif self.curr_pos == self.get_size() - 1 and self.stream_player_vlc.get_is_playing() == 0:
             self.last_stream = True
-        elif self.stream_player_vlc.get_time_milli() > 5000:
+        elif self.stream_player_vlc.get_current_time() > 5000:
             self.curr_pos -= 1
         else:
             self.curr_pos -= 2
@@ -135,9 +135,9 @@ class StreamQueue:
     def seek_to_time(self, seek_time):
         self.stream_player_vlc.seek_to_time(seek_time)
 
-    def get_current_time(self):
+    def get_current_time_formatted(self):
         try:
-            return self.stream_player_vlc.get_current_time()
+            return self.stream_player_vlc.get_current_time_formatted()
         except:
             return 0
 
