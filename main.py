@@ -27,10 +27,7 @@ class MainWindow(QObject):
 
     searchResult = Signal(int, str, str)
     updateQueue = Signal(str, str, str, str)
-    setPlayer = Signal(str, str, str, str, str, str, str, str, str, str
-
-
-                       )
+    setPlayer = Signal(str, str, str, str, str, str, str, str, str, str)
     setProgress = Signal(str, float)
     clearSearch = Signal()  # Clears search results in UI
     upDatePlayImg = Signal(str)

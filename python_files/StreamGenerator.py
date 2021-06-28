@@ -30,17 +30,20 @@ class StreamGenerator:
         best_audio = pafy_file.getbestaudio()
         audio_url = best_audio.url
 
-        if video['artist'] is not None:
-            try:
-                item = itunes.search_track(query='{} {}'.format(video['artist'], video['track']), limit=1, order='popular')[0]
-                stream = self.set_metadata_api(item, video, title, url, audio_url)
-            except KeyError:
+        try:
+            if video['artist'] is not None:
+                try:
+                    item = itunes.search_track(query='{} {}'.format(video['artist'], video['track']), limit=1, order='popular')[0]
+                    stream = self.set_metadata_api(item, video, title, url, audio_url)
+                except KeyError:
+                    stream = self.set_metadata_yt(video, title, url, audio_url)
+                except IndexError:
+                    stream = self.set_metadata_yt(video, title, url, audio_url)
+                except AttributeError:
+                    stream = self.set_metadata_yt(video, title, url, audio_url)
+            else:
                 stream = self.set_metadata_yt(video, title, url, audio_url)
-            except IndexError:
-                stream = self.set_metadata_yt(video, title, url, audio_url)
-            except AttributeError:
-                stream = self.set_metadata_yt(video, title, url, audio_url)
-        else:
+        except KeyError:
             stream = self.set_metadata_yt(video, title, url, audio_url)
         return stream
 
