@@ -12,6 +12,6 @@
 </p>
 <hr>
 
-![alt text](https://github.com/Idreessyed1/Vynl/blob/master/vynl_1.PNG?raw=true)  |  ![alt text](https://github.com/Idreessyed1/Vynl/blob/master/vynl_2.PNG?raw=true)
+![alt text](https://github.com/Idreessyed1/VYNL-Streaming/blob/master/images/readme_images/home_page1.PNG?raw=true)  |  ![alt text](https://github.com/Idreessyed1/VYNL-Streaming/blob/master/images/readme_images/home_page_2.PNG?raw=true)
 :-------------------------:|:-------------------------:
 ![alt text](https://github.com/Idreessyed1/Vynl/blob/master/vynl_3.PNG?raw=true)
