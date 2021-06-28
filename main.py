@@ -23,7 +23,7 @@ class MainWindow(QObject):
         self.get_search_results = GetSearchResults()
         self.stream_queue = StreamQueue(self)  # Has an instance of main to update player
         self.stream_generator = StreamGenerator()
-        print(threading.get_ident())
+        # print(threading.get_ident())
 
     searchResult = Signal(int, str, str)
     updateQueue = Signal(str, str, str, str)
