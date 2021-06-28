@@ -484,7 +484,7 @@ Window {
 
                             Text {
                                 id: currTimeTxt
-                                text: qsTr("00:00")
+                                text: qsTr("0:00")
                                 color: secondaryColor
                                 anchors.left: parent.left
                                 anchors.bottom: parent.bottom
@@ -496,7 +496,7 @@ Window {
 
                             Text {
                                 id: runTimeTxt
-                                text: qsTr("00:00")
+                                text: qsTr("0:00")
                                 color: secondaryColor
                                 anchors.right: parent.right
                                 anchors.bottom: parent.bottom

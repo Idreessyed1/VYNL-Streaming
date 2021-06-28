@@ -17,7 +17,7 @@ class MainWindow(QObject):
         QObject.__init__(self)
         self.timer = QTimer()
         self.timer.timeout.connect(lambda: self.update_progress())
-        self.timer.start(500)
+        self.timer.start(100)
         self.play_img_val = 0
         self.database = DatabaseHelper()
         self.get_search_results = GetSearchResults()
