@@ -34,7 +34,7 @@
 ![alt text](https://github.com/Idreessyed1/VYNL-Streaming/blob/master/images/readme_images/search_page.PNG?raw=true)
     
 ## About
-Vynl is a simple desktop streaming application to stream, play, save, and download all your favorite music. Vynl is avalible for Windsows, MacOS, and Linux.
+Vynl is a simple desktop streaming application to stream, play, save, and download all your favorite music. Vynl is avaliable for Windsows, MacOS, and Linux.
     
 ## Features
 * Stream
