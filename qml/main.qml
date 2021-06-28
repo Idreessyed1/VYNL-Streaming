@@ -120,15 +120,16 @@ Window {
                 Row {
                     id: greetRow
                     x: 95
-                    y: 306
+                    y: 300
                     width: 300
                     height: 100
 
                     Image {
                         id: profileImg
-                        width: 100
-                        height: 100
-                        source: "../images/svg_images/accountIcon.png"
+                        width: 70
+                        height: 70
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: "../images/svg_images/userIcon.png"
                         fillMode: Image.PreserveAspectFit
                     }
 
@@ -159,9 +160,9 @@ Window {
                 Column {
                     id: exploreColumn
                     x: 95
-                    y: 496
+                    y: 450
                     width: 350
-                    height: 306
+                    height: 370
 
                     Text {
                         id: exploreTxt
@@ -172,6 +173,23 @@ Window {
                         fontSizeMode: Text.FixedSize
                         font.family: foundry.name
                         bottomPadding: 10
+                    }
+
+                    MenuButton{
+                        id: homeBtn
+                        menuBtnTxt: "Home"
+                        menuBtnIcon: "home_icon.svg"
+                        colorDefault: secondaryColor
+                        colorMouseOver: thirdColor
+                        colorMousePressed: thirdColor
+                        onClicked: {
+                            searchPageLoader.visible = true
+                            trendingPageLoader.visible = false
+                            favoritesPageLoader.visible = false
+                            middleContentPanelAnimation.running = true
+                            mediaPlayerAnimation.running = true
+                            playerTxtAnimation.running = true
+                        }
                     }
 
                     MenuButton{
@@ -261,9 +279,9 @@ Window {
                 Column {
                     id: accountColumn
                     x: 95
-                    y: 860
-                    width: 352
-                    height: 238
+                    y: 870
+                    width: 350
+                    height: 200
 
                     Text {
                         id: accountTxt
@@ -1180,7 +1198,7 @@ Window {
             queueListModel.append({queueImg: albumArt, track: track, artist: artist, runtime: time});
         }
 
-        function onSetPlayer(albumArt, track, artist, length, color1, color2, color3){
+        function onSetPlayer(albumArt, track, artist, length, color1, color2, color3, upNextTrack, upNextArtist, upNextArt){
             albumImg.source = albumArt;
             trackTxt.text = track;
             artistTxt.text = artist;
@@ -1188,6 +1206,9 @@ Window {
             mainColor = color1;
             secondaryColor = color2;
             thirdColor = color3;
+            upNextTrackTxt.text = upNextTrack;
+            upNextArtistText.text = upNextArtist;
+            upNextImg.source = upNextArt;
         }
 
         function onSetProgress(time, precentage){
@@ -1217,8 +1238,10 @@ Window {
 
 
 
+
+
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.66}D{i:45}
+    D{i:0;formeditorZoom:0.33}
 }
 ##^##*/
