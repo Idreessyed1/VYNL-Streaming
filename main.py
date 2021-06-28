@@ -27,7 +27,10 @@ class MainWindow(QObject):
 
     searchResult = Signal(int, str, str)
     updateQueue = Signal(str, str, str, str)
-    setPlayer = Signal(str, str, str, str, str, str, str)
+    setPlayer = Signal(str, str, str, str, str, str, str, str, str, str
+
+
+                       )
     setProgress = Signal(str, float)
     clearSearch = Signal()  # Clears search results in UI
     upDatePlayImg = Signal(str)
@@ -44,13 +47,22 @@ class MainWindow(QObject):
         """
         Updates the media player information in the UI. (Colors, track, artist, album art, track runtime)
         """
-        main_color, secondary_color, third_color = self.stream_queue.get_current_stream().get_colors()
         track = self.stream_queue.get_current_stream().get_track()
         artist = self.stream_queue.get_current_stream().get_artist()
         album_art = self.stream_queue.get_current_stream().get_album_art()
         length = self.stream_queue.get_current_stream().get_length()
+        main_color, secondary_color, third_color = self.stream_queue.get_current_stream().get_colors()
+        try:
+            up_next_track = self.stream_queue.get_stream(self.stream_queue.get_stream_position() + 1).get_track()
+            up_next_artist = self.stream_queue.get_stream(self.stream_queue.get_stream_position() + 1).get_artist()
+            up_next_album_art = self.stream_queue.get_stream(self.stream_queue.get_stream_position() + 1).get_album_art()
+        except IndexError:
+            up_next_track = "Add more songs"
+            up_next_artist = ""
+            up_next_album_art = ""
+
         self.setPlayer.emit(album_art.replace("https://", "http://"), track, artist, length, main_color,
-                            secondary_color, third_color)
+                            secondary_color, third_color, up_next_track, up_next_artist, up_next_album_art)
 
     def update_progress(self):
         """
