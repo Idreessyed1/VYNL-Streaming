@@ -415,7 +415,7 @@ Window {
                         wrapMode: Text.NoWrap
                         font.bold: false
                         fontSizeMode: Text.FixedSize
-                        anchors.topMargin: 0
+                        anchors.topMargin: 10
                         anchors.rightMargin: 10
                         anchors.leftMargin: 10
                         font.capitalization: Font.AllUppercase
@@ -435,7 +435,7 @@ Window {
                         font.family: foundry.name
                         font.pixelSize: 25
                         horizontalAlignment: Text.AlignHCenter
-                        anchors.topMargin: 0
+                        anchors.topMargin: 10
                         anchors.rightMargin: 15
                         anchors.leftMargin: 15
                         bottomPadding: 5
@@ -489,6 +489,7 @@ Window {
                                 anchors.left: parent.left
                                 anchors.bottom: parent.bottom
                                 font.pixelSize: 25
+                                anchors.bottomMargin: -10
                                 anchors.leftMargin: 5
                                 font.family: foundry.name
 
@@ -501,7 +502,7 @@ Window {
                                 anchors.right: parent.right
                                 anchors.bottom: parent.bottom
                                 font.pixelSize: 25
-                                anchors.bottomMargin: 0
+                                anchors.bottomMargin: -10
                                 anchors.rightMargin: 5
                                 font.family: foundry.name
 
@@ -511,10 +512,11 @@ Window {
 
                     Row {
                         id: controlRow
-                        height: 100
                         anchors.left: parent.left
                         anchors.right: parent.right
+                        anchors.top: parent.top
                         anchors.bottom: parent.bottom
+                        anchors.topMargin: 660
                         anchors.rightMargin: 0
                         anchors.leftMargin: 0
                         anchors.bottomMargin: 0
@@ -616,24 +618,6 @@ Window {
                     font.family: proximaNovaBold.name
                     fontSizeMode: Text.FixedSize
 
-//                    PropertyAnimation{
-//                        id: queueTxtSlideAnimation
-//                        target: queueTxt
-//                        property: "y"
-//                        to: if(queueTxt.y == 1000) return 100; else return 1000;
-//                        duration: 1000
-//                        easing.type: Easing.InOutQuint
-//                    }
-
-//                    PropertyAnimation{
-//                        id: queueTxtFontAnimation
-//                        target: queueTxt
-//                        property: "font.pixelSize"
-//                        to: if(queueTxt.font.pixelSize == 50) return 60; else return 50;
-//                        duration: 1000
-//                        easing.type: Easing.InOutQuint
-//                    }
-
                     NumberAnimation {
                             id: queueTxtFadeOut
                             target: queueTxt
@@ -658,7 +642,7 @@ Window {
                     x: 900
                     y: 210
                     width: 600
-                    height: 750 //968
+                    height: 970
                     boundsBehavior: Flickable.StopAtBounds
                     clip: true
                     spacing: 20
@@ -882,10 +866,45 @@ Window {
 //                    }
                 }
 
+                Text {
+                    id: upNextTxt
+                    x: 1000
+                    y: 1000
+                    width: 226
+                    height: 52
+                    color: secondaryColor
+                    text: qsTr("NEXT")
+                    elide: Text.ElideNone
+                    font.pixelSize: 40
+                    font.capitalization: Font.AllUppercase
+                    font.family: proximaNovaBold.name
+                    fontSizeMode: Text.VerticalFit
+                    visible: false
+
+                    NumberAnimation {
+                            id: upNextTxtFadeOut
+                            target: queueTxt
+                            property: "opacity"
+                            duration: 500
+                            from: 1
+                            to: 0
+                    }
+
+                    NumberAnimation {
+                            id: upNextTxtFadeIn
+                            target: queueTxt
+                            property: "opacity"
+                            duration: 500
+                            from: 0
+                            to: 1
+                    }
+
+                }
+
                 Rectangle{
                     id: upNextRect
                     x: 1000
-                    y: 1030
+                    y: 1060
                     property var queueId: trackId
                     property bool currentTrack: trackStatus
                     width: 500
@@ -893,6 +912,25 @@ Window {
                     color: thirdColor
                     border.width: 0//5
                     radius: 20
+                    visible: false
+
+                    NumberAnimation {
+                            id: upNextRectFadeOut
+                            target: queueTxt
+                            property: "opacity"
+                            duration: 500
+                            from: 1
+                            to: 0
+                    }
+
+                    NumberAnimation {
+                            id: upNextRectFadeIn
+                            target: queueTxt
+                            property: "opacity"
+                            duration: 500
+                            from: 0
+                            to: 1
+                    }
 
                     Row {
                         id: upNextRow
@@ -939,7 +977,6 @@ Window {
                                 id: upNextTrackTxt
                                 width: 300
                                 height: 40
-                                text: track
                                 elide: Text.ElideRight
                                 anchors.left: parent.left
                                 font.pixelSize: 30
@@ -949,13 +986,13 @@ Window {
                                 font.weight: Font.Thin
                                 font.family: foundry.name
                                 color: secondaryColor
+                                text: "#track#"
                             }
 
                             Text {
                                 id: upNextArtistText
                                 width: 300
                                 height: 40
-                                text: artist
                                 elide: Text.ElideRight
                                 anchors.left: parent.left
                                 font.pixelSize: 25
@@ -963,6 +1000,7 @@ Window {
                                 anchors.leftMargin: 0
                                 font.family: foundry.name
                                 color: secondaryColor
+                                text: "#artist#"
                             }
                         }
                     }
@@ -972,7 +1010,7 @@ Window {
                 Text {
                     id: controlsTxt
                     x: 100
-                    y: 1025
+                    y: 1000
                     width: 226
                     height: 52
                     color: secondaryColor
@@ -983,13 +1021,22 @@ Window {
                     font.family: proximaNovaBold.name
                     fontSizeMode: Text.VerticalFit
 
-                    PropertyAnimation{
-//                        id: controlsTxtAnimation
-//                        target: playerTxt
-//                        property: "x"
-//                        to: if(playerTxt.x == 1000) return 100; else return 1000;
-//                        duration: 1000
-//                        easing.type: Easing.InOutQuint
+                    NumberAnimation {
+                            id: controlsTxtFadeOut
+                            target: queueTxt
+                            property: "opacity"
+                            duration: 500
+                            from: 1
+                            to: 0
+                    }
+
+                    NumberAnimation {
+                            id: controlsTxtFadeIn
+                            target: queueTxt
+                            property: "opacity"
+                            duration: 500
+                            from: 0
+                            to: 1
                     }
 
                 }
@@ -1000,13 +1047,9 @@ Window {
                     y: 1075
                     width: 500
                     height: 72
-
-
                 }
 
             }
-
-
 
             Rectangle {
                 // ADD TIME TO SEARCH RESULTS
@@ -1052,15 +1095,28 @@ Window {
                         if(middleContentPanel.width == 50){
                             listViewFadeIn.running = true;
                             queueTxtFadeIn.running = true;
+                            controlsTxtFadeIn.running = true;
+                            //upNextTxtFadeOut.running = true;
+                            //upNextRectFadeOut.running = true;
                             queueListView.visible = true;
                             queueTxt.visible = true;
+                            controlsTxt.visible = true;
+                            upNextTxt.visible = false;
+                            upNextRect.visible = false;
                             return 980;
                         }
+
                         else{
+                            upNextTxt.visible = true;
+                            upNextRect.visible = true;
                             listViewFadeOut.running = true;
                             queueTxtFadeOut.running = true;
+                            controlsTxtFadeOut.running = true;
+                            //upNextTxtFadeIn.running = true;
+                            //upNextRectFadeIn.running = true;
                             queueListView.visible = false;
                             queueTxt.visible = false;
+                            controlsTxt.visible = false;
                             return 50;
                         }
                     }
@@ -1163,6 +1219,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.33}
+    D{i:0;formeditorZoom:0.66}D{i:45}
 }
 ##^##*/
