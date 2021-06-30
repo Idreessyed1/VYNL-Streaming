@@ -357,7 +357,7 @@ Window {
                     x: 100
                     y: 220
                     width: 500
-                    height: 750
+                    height: 760
 
                     PropertyAnimation{
                         id: mediaPlayerAnimation
@@ -391,12 +391,12 @@ Window {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.top: parent.top
-                        anchors.bottom: parent.bottom
                         source: "../images/default_album.jpg" //"https://i.ytimg.com/vi/WlTlUseVt7E/maxresdefault.jpg"
-                        anchors.bottomMargin: 250
                         anchors.topMargin: 0
                         anchors.rightMargin: 0
                         anchors.leftMargin: 0
+                        width: 500
+                        height: 500
                         fillMode: Image.PreserveAspectCrop
 
                         property bool rounded: true
@@ -428,7 +428,7 @@ Window {
                         anchors.right: parent.right
                         anchors.top: albumImg.bottom
                         font.family: foundry.name
-                        font.pixelSize: 35
+                        font.pixelSize: 40
                         horizontalAlignment: Text.AlignHCenter
                         wrapMode: Text.NoWrap
                         font.bold: false
@@ -451,7 +451,7 @@ Window {
                         anchors.right: parent.right
                         anchors.top: trackTxt.bottom
                         font.family: foundry.name
-                        font.pixelSize: 25
+                        font.pixelSize: 27
                         horizontalAlignment: Text.AlignHCenter
                         anchors.topMargin: 10
                         anchors.rightMargin: 15
@@ -636,7 +636,8 @@ Window {
                         progressColor: secondaryColor
                         trackWidth: 10
                         progressWidth: 10
-                        handleWidth: 12
+                        handleWidth: 15
+                        handleHeight: 15
 
 //                        pressed: {
 //                            con.seek(circularSlider.value)
@@ -647,7 +648,7 @@ Window {
 
                 Text {
                     id: queueTxt
-                    x: 900//1000
+                    x: 850//1000
                     y: 100
                     width: 265
                     height: 80
@@ -683,13 +684,13 @@ Window {
 
                 ListView {
                     id: queueListView
-                    x: 900
+                    x: 850
                     y: 210
-                    width: 600
+                    width: 650
                     height: 970
                     boundsBehavior: Flickable.StopAtBounds
                     clip: true
-                    spacing: 20
+                    spacing: 15
                     snapMode: ListView.SnapToItem
                     maximumFlickVelocity: 10000
                     cacheBuffer:1000
@@ -731,11 +732,11 @@ Window {
                         id: queueRect2
                         property var queueId: trackId
                         property bool currentTrack: trackStatus
-                        width: 600
+                        width: 650
                         height: 120
                         color: mainColor
                         border.width: 0//5
-                        radius: 20
+                        //radius: 20
 
                         MouseArea{
                             id: queueMA
@@ -814,11 +815,11 @@ Window {
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.left: queueImg2.right
                                 anchors.rightMargin: 15
-                                anchors.leftMargin: 15
+                                anchors.leftMargin: 25
 
                                 Text {
                                     id: songQueTxt2
-                                    width: 300
+                                    width: 320
                                     height: 40
                                     text: track
                                     elide: Text.ElideRight
@@ -834,7 +835,7 @@ Window {
 
                                 Text {
                                     id: artistQueText2
-                                    width: 300
+                                    width: 320
                                     height: 40
                                     text: artist
                                     elide: Text.ElideRight
@@ -904,7 +905,7 @@ Window {
                     id: queueListModel
 //                    ListElement{
 //                        queueImg: "../images/thriller.jpg"
-//                        track: "Dressed for Success"
+//                        track: "Dressed for my Own Big Extra Success"
 //                        artist: "Michael Jackson"
 //                        runtime: "1:30"
 //                    }
@@ -1051,45 +1052,45 @@ Window {
 
                 }
 
-                Text {
-                    id: controlsTxt
-                    x: 100
-                    y: 1045
-                    width: 269
-                    height: 60
-                    color: secondaryColor
-                    text: qsTr("Controls")
-                    elide: Text.ElideNone
-                    font.pixelSize: 45
-                    font.capitalization: Font.AllUppercase
-                    font.family: proximaNovaBold.name
-                    fontSizeMode: Text.VerticalFit
+//                Text {
+//                    id: controlsTxt
+//                    x: 100
+//                    y: 1045
+//                    width: 269
+//                    height: 60
+//                    color: secondaryColor
+//                    text: qsTr("Controls")
+//                    elide: Text.ElideNone
+//                    font.pixelSize: 45
+//                    font.capitalization: Font.AllUppercase
+//                    font.family: proximaNovaBold.name
+//                    fontSizeMode: Text.VerticalFit
 
-                    NumberAnimation {
-                            id: controlsTxtFadeOut
-                            target: queueTxt
-                            property: "opacity"
-                            duration: 500
-                            from: 1
-                            to: 0
-                    }
+//                    NumberAnimation {
+//                            id: controlsTxtFadeOut
+//                            target: queueTxt
+//                            property: "opacity"
+//                            duration: 500
+//                            from: 1
+//                            to: 0
+//                    }
 
-                    NumberAnimation {
-                            id: controlsTxtFadeIn
-                            target: queueTxt
-                            property: "opacity"
-                            duration: 500
-                            from: 0
-                            to: 1
-                    }
+//                    NumberAnimation {
+//                            id: controlsTxtFadeIn
+//                            target: queueTxt
+//                            property: "opacity"
+//                            duration: 500
+//                            from: 0
+//                            to: 1
+//                    }
 
-                }
+//                }
 
                 Column {
                     id: controlColumn
-                    x: 100
-                    y: 1095
-                    width: 500
+                    x: 155
+                    y: 1055
+                    width: 362
                     height: 72
 
                     MiniButton {
@@ -1212,12 +1213,12 @@ Window {
                         if(middleContentPanel.width == 50){
                             listViewFadeIn.running = true;
                             queueTxtFadeIn.running = true;
-                            controlsTxtFadeIn.running = true;
+                            //controlsTxtFadeIn.running = true;
                             //upNextTxtFadeOut.running = true;
                             //upNextRectFadeOut.running = true;
                             queueListView.visible = true;
                             queueTxt.visible = true;
-                            controlsTxt.visible = true;
+                            //controlsTxt.visible = true;
                             upNextTxt.visible = false;
                             upNextRect.visible = false;
                             return 980;
@@ -1228,12 +1229,12 @@ Window {
                             upNextRect.visible = true;
                             listViewFadeOut.running = true;
                             queueTxtFadeOut.running = true;
-                            controlsTxtFadeOut.running = true;
+                            //controlsTxtFadeOut.running = true;
                             //upNextTxtFadeIn.running = true;
                             //upNextRectFadeIn.running = true;
                             queueListView.visible = false;
                             queueTxt.visible = false;
-                            controlsTxt.visible = false;
+                            //controlsTxt.visible = false;
                             return 50;
                         }
                     }
