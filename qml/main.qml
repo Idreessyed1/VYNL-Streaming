@@ -355,7 +355,7 @@ Window {
                 Column {
                     id: mediaPlayerColumn
                     x: 100
-                    y: 210
+                    y: 220
                     width: 500
                     height: 750
 
@@ -411,7 +411,7 @@ Window {
                                    anchors.centerIn: parent
                                    width: albumImg.adapt ? albumImg.width : Math.min(albumImg.width, albumImg.height)
                                    height: albumImg.adapt ? albumImg.height : width
-                                   radius: 10
+                                   radius: 250
                                }
                            }
                         }
@@ -433,7 +433,7 @@ Window {
                         wrapMode: Text.NoWrap
                         font.bold: false
                         fontSizeMode: Text.FixedSize
-                        anchors.topMargin: 10
+                        anchors.topMargin: 50
                         anchors.rightMargin: 10
                         anchors.leftMargin: 10
                         font.capitalization: Font.AllUppercase
@@ -459,56 +459,63 @@ Window {
                         bottomPadding: 5
                     }
 
-                    Column {
-                        id: progressRow
-                        height: 100
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.top: artistTxt.bottom
-                        anchors.bottom: controlRow.top
-                        anchors.rightMargin: 0
-                        anchors.leftMargin: 0
-                        anchors.bottomMargin: 0
-                        anchors.topMargin: 0
+//                    Column {
+//                        id: progressRow
+//                        height: 100
+//                        anchors.left: parent.left
+//                        anchors.right: parent.right
+//                        anchors.top: artistTxt.bottom
+//                        anchors.bottom: controlRow.top
+//                        anchors.rightMargin: 0
+//                        anchors.leftMargin: 0
+//                        anchors.bottomMargin: 0
+//                        anchors.topMargin: 0
 
 
-                        Slider{
-                            // Add style
-                            id: progressBar
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.top: parent.top
-                            anchors.topMargin: 0
-                            anchors.leftMargin: 0
-                            anchors.rightMargin: 0
-                            value: .5
-                            topPadding: 0
-                            bottomPadding: 0
+//                        Slider{
+//                            // Add style
+//                            id: progressBar
+//                            anchors.left: parent.left
+//                            anchors.right: parent.right
+//                            anchors.top: parent.top
+//                            anchors.topMargin: 0
+//                            anchors.leftMargin: 0
+//                            anchors.rightMargin: 0
+//                            value: .5
+//                            topPadding: 0
+//                            bottomPadding: 0
 
-                            onMoved: {
-                                con.seek(progressBar.value)
-                            }
-                        }
+//                            onMoved: {
+//                                con.seek(progressBar.value)
+//                            }
+//                        }
 
                         Row {
                             id: timeRow
-                            height: 20
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.bottom: parent.bottom
-                            anchors.bottomMargin: 0
-                            anchors.rightMargin: 0
-                            anchors.leftMargin: 0
+                            width: 130
+                            height: 30
+                            anchors.top: artistTxt.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.topMargin: 10
 
                             Text {
                                 id: currTimeTxt
                                 text: qsTr("0:00")
                                 color: secondaryColor
                                 anchors.left: parent.left
-                                anchors.bottom: parent.bottom
                                 font.pixelSize: 25
-                                anchors.bottomMargin: -10
-                                anchors.leftMargin: 5
+                                anchors.leftMargin: 0
+                                font.family: foundry.name
+
+                            }
+
+                            Text {
+                                id: divideTimeTxt
+                                text: qsTr("|")
+                                color: secondaryColor
+                                font.pixelSize: 25
+                                horizontalAlignment: Text.AlignHCenter
+                                anchors.horizontalCenter: parent.horizontalCenter
                                 font.family: foundry.name
 
                             }
@@ -518,26 +525,23 @@ Window {
                                 text: qsTr("0:00")
                                 color: secondaryColor
                                 anchors.right: parent.right
-                                anchors.bottom: parent.bottom
                                 font.pixelSize: 25
-                                anchors.bottomMargin: -10
-                                anchors.rightMargin: 5
+                                anchors.rightMargin: 0
                                 font.family: foundry.name
 
                             }
                         }
-                    }
+                   // }
 
                     Row {
                         id: controlRow
+                        y: 670
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        anchors.top: parent.top
                         anchors.bottom: parent.bottom
-                        anchors.topMargin: 660
                         anchors.rightMargin: 0
                         anchors.leftMargin: 0
-                        anchors.bottomMargin: 0
+                        anchors.bottomMargin: -20
 
                         MiniButton {
                             id: repeatBtn
@@ -615,6 +619,28 @@ Window {
                             colorMousePressed: thirdColor
                             onClicked: con.prev_stream()
                         }
+
+                    }
+
+                    CircularSlider {
+                        id: circularSlider
+                        x: -25
+                        y: -25
+                        width: 550
+                        height: 550
+                        startAngle: 0
+                        endAngle: 360
+                        hideTrack: true
+                        rotation: 180
+                        trackColor: thirdColor// "#db4141"//"#00000000"
+                        progressColor: secondaryColor
+                        trackWidth: 10
+                        progressWidth: 10
+                        handleWidth: 12
+
+//                        pressed: {
+//                            con.seek(circularSlider.value)
+//                        }
 
                     }
                 }
@@ -707,7 +733,7 @@ Window {
                         property bool currentTrack: trackStatus
                         width: 600
                         height: 120
-                        color: thirdColor
+                        color: mainColor
                         border.width: 0//5
                         radius: 20
 
@@ -775,7 +801,7 @@ Window {
                                             anchors.centerIn: parent
                                             width: queueImg2.adapt ? queueImg2.width : Math.min(queueImg2.width, queueImg2.height)
                                             height: queueImg2.adapt ? queueImg2.height : width
-                                            radius: 10
+                                            radius: 50
                                         }
                                     }
                                 }
@@ -887,7 +913,7 @@ Window {
                 Text {
                     id: upNextTxt
                     x: 1000
-                    y: 1000
+                    y: 1020
                     width: 226
                     height: 52
                     color: secondaryColor
@@ -922,12 +948,12 @@ Window {
                 Rectangle{
                     id: upNextRect
                     x: 1000
-                    y: 1060
+                    y: 1080
                     property var queueId: trackId
                     property bool currentTrack: trackStatus
                     width: 500
                     height: 120
-                    color: thirdColor
+                    color: mainColor
                     border.width: 0//5
                     radius: 20
                     visible: false
@@ -976,7 +1002,7 @@ Window {
                                         anchors.centerIn: parent
                                         width: upNextImg.adapt ? upNextImg.width : Math.min(upNextImg.width, upNextImg.height)
                                         height: upNextImg.adapt ? upNextImg.height : width
-                                        radius: 10
+                                        radius: 50
                                     }
                                 }
                             }
@@ -1028,7 +1054,7 @@ Window {
                 Text {
                     id: controlsTxt
                     x: 100
-                    y: 1020
+                    y: 1045
                     width: 269
                     height: 60
                     color: secondaryColor
@@ -1062,7 +1088,7 @@ Window {
                 Column {
                     id: controlColumn
                     x: 100
-                    y: 1075
+                    y: 1095
                     width: 500
                     height: 72
 
@@ -1286,7 +1312,8 @@ Window {
 
         function onSetProgress(time, precentage){
             currTimeTxt.text = time;
-            progressBar.value = precentage;
+            //progressBar.value = precentage;
+            circularSlider.value = precentage;
         }
 
         function onClearSearch(){
@@ -1315,6 +1342,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.33}
+    D{i:0;formeditorZoom:0.5}D{i:41}
 }
 ##^##*/
