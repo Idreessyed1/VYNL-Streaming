@@ -357,7 +357,7 @@ Window {
                     x: 100
                     y: 220
                     width: 500
-                    height: 760
+                    height: 740
 
                     PropertyAnimation{
                         id: mediaPlayerAnimation
@@ -392,15 +392,17 @@ Window {
                         anchors.right: parent.right
                         anchors.top: parent.top
                         source: "../images/default_album.jpg" //"https://i.ytimg.com/vi/WlTlUseVt7E/maxresdefault.jpg"
-                        anchors.topMargin: 0
-                        anchors.rightMargin: 0
-                        anchors.leftMargin: 0
-                        width: 500
-                        height: 500
+                        anchors.topMargin: 25
+                        anchors.rightMargin: 26
+                        anchors.leftMargin: 25
+                        width: 450
+                        height: 450
                         fillMode: Image.PreserveAspectCrop
 
                         property bool rounded: true
                         property bool adapt: true
+                        x: 0
+                        y: 0
 
                         layer.enabled: rounded
                         layer.effect: OpacityMask {
@@ -408,15 +410,27 @@ Window {
                                width: albumImg.width
                                height: albumImg.height
                                Rectangle {
+                                   id: roundImg
+
                                    anchors.centerIn: parent
                                    width: albumImg.adapt ? albumImg.width : Math.min(albumImg.width, albumImg.height)
                                    height: albumImg.adapt ? albumImg.height : width
-                                   radius: 250
+                                   radius: 225
                                }
                            }
                         }
 
                     }
+
+//                    DropShadow {
+//                            anchors.fill: albumImg
+//                            horizontalOffset: 0
+//                            verticalOffset: 20
+//                            radius: 10.0
+//                            samples: 17
+//                            color: "#80000000"
+//                            source: roundImg
+//                        }
 
                     Text {
                         id: trackTxt
@@ -543,32 +557,32 @@ Window {
                         anchors.leftMargin: 0
                         anchors.bottomMargin: -20
 
-                        MiniButton {
-                            id: repeatBtn
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.right: prevBtn.left
-                            anchors.rightMargin: 20
-                            antialiasing: false
-                            highlighted: false
-                            size: 40
-                            regImg: "repeat_icon.png"
-                            pressedImg: "repeat_icon.png"
-                            colorDefault: secondaryColor
-                            colorMouseOver: thirdColor
-                            colorMousePressed: thirdColor
-                            onClicked: con.prev_stream()
-                        }
+//                        MiniButton {
+//                            id: repeatBtn
+//                            anchors.verticalCenter: parent.verticalCenter
+//                            anchors.right: prevBtn.left
+//                            anchors.rightMargin: 20
+//                            antialiasing: false
+//                            highlighted: false
+//                            size: 40
+//                            regImg: "repeat_icon.png"
+//                            pressedImg: "repeat_icon.png"
+//                            colorDefault: secondaryColor
+//                            colorMouseOver: thirdColor
+//                            colorMousePressed: thirdColor
+//                            onClicked: con.prev_stream()
+//                        }
 
                         MiniButton {
                             id: prevBtn
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.right: playBtn.left
-                            anchors.rightMargin: 0
+                            anchors.rightMargin: 50
                             antialiasing: false
                             highlighted: false
-                            size: 100
-                            regImg: "prev_icon.png"
-                            pressedImg: "prev_icon.png"
+                            size: 60
+                            regImg: "previous.png"
+                            pressedImg: "previous.png"
                             colorDefault: secondaryColor
                             colorMouseOver: thirdColor
                             colorMousePressed: thirdColor
@@ -584,50 +598,52 @@ Window {
                             colorDefault: secondaryColor
                             colorMouseOver: thirdColor
                             colorMousePressed: thirdColor
-                            image1: "pause_icon.png"
-                            onClicked: { con.pause_stream()}
+                            //regImg: "play.png"
+                            //pressedImg: "play.png"
+                            image1: "play.png"
+                            //onClicked: { con.pause_stream()}
                         }
 
                         MiniButton {
                             id: nextBtn
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.left: playBtn.right
-                            anchors.leftMargin: 0
+                            anchors.leftMargin: 50
                             antialiasing: false
                             highlighted: false
-                            size: 100
-                            regImg: "next_icon.png"
-                            pressedImg: "next_icon.png"
+                            size: 60
+                            regImg: "next.png"
+                            pressedImg: "next.png"
                             colorDefault: secondaryColor
                             colorMouseOver: thirdColor
                             colorMousePressed: thirdColor
                             onClicked: con.next_stream()
                         }
 
-                        MiniButton {
-                            id: shuffleBtn
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.left: nextBtn.right
-                            anchors.leftMargin: 15
-                            antialiasing: false
-                            highlighted: false
-                            size: 60
-                            regImg: "shuffle_icon.png"
-                            pressedImg: "shuffle_icon.png"
-                            colorDefault: secondaryColor
-                            colorMouseOver: thirdColor
-                            colorMousePressed: thirdColor
-                            onClicked: con.prev_stream()
-                        }
+//                        MiniButton {
+//                            id: shuffleBtn
+//                            anchors.verticalCenter: parent.verticalCenter
+//                            anchors.left: nextBtn.right
+//                            anchors.leftMargin: 15
+//                            antialiasing: false
+//                            highlighted: false
+//                            size: 60
+//                            regImg: "shuffle_icon.png"
+//                            pressedImg: "shuffle_icon.png"
+//                            colorDefault: secondaryColor
+//                            colorMouseOver: thirdColor
+//                            colorMousePressed: thirdColor
+//                            onClicked: con.prev_stream()
+//                        }
 
                     }
 
                     CircularSlider {
                         id: circularSlider
-                        x: -25
-                        y: -25
-                        width: 550
-                        height: 550
+                        x: 0
+                        y: 0
+                        width: 500
+                        height: 500
                         startAngle: 0
                         endAngle: 360
                         hideTrack: true
@@ -1088,18 +1104,18 @@ Window {
 
                 Column {
                     id: controlColumn
-                    x: 155
-                    y: 1055
-                    width: 362
-                    height: 72
+                    x: 214
+                    y: 1050
+                    width: 273
+                    height: 60
 
                     MiniButton {
-                        id: controlFavBtn
+                        id: controlRepeatBtn
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.left
                         anchors.leftMargin: 0
-                        regImg: "star_icon.png"
-                        pressedImg: "star_icon_pressed.png"
+                        regImg: "repeat1.png"
+                        pressedImg: "repeat1.png"
                         size: 40
                         colorDefault: secondaryColor
                         colorMouseOver: thirdColor
@@ -1108,13 +1124,13 @@ Window {
                     }
 
                     MiniButton {
-                        id: controlPlaylistBtn
+                        id: controlFavBtn
                         anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: controlFavBtn.right
+                        anchors.left: controlRepeatBtn.right
                         anchors.leftMargin: 40
-                        regImg: "playlist_icon.svg"
-                        pressedImg: "playlist_icon.svg"
-                        size: 40
+                        regImg: "star_icon.png"
+                        pressedImg: "star_icon.png"
+                        size: 30
                         colorDefault: secondaryColor
                         colorMouseOver: thirdColor
                         colorMousePressed: thirdColor
@@ -1124,10 +1140,10 @@ Window {
                     MiniButton {
                         id: controlDownloadBtn
                         anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: controlPlaylistBtn.right
+                        anchors.left: controlFavBtn.right
                         anchors.leftMargin: 40
-                        regImg: "downloadIcon.png"
-                        pressedImg: "downloadIcon.png"
+                        regImg: "download.png"
+                        pressedImg: "download.png"
                         size: 40
                         colorDefault: secondaryColor
                         colorMouseOver: thirdColor
@@ -1136,12 +1152,12 @@ Window {
                     }
 
                     MiniButton {
-                        id: controlQueueBtn
+                        id: controlShuffleBtn
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: controlDownloadBtn.right
                         anchors.leftMargin: 40
-                        regImg: "queue_icon.svg"
-                        pressedImg: "queue_icon.svg"
+                        regImg: "shuffle.png"
+                        pressedImg: "shuffle.png"
                         size: 40
                         colorDefault: secondaryColor
                         colorMouseOver: thirdColor
@@ -1149,19 +1165,19 @@ Window {
                         //onClicked: con.f
                     }
 
-                    MiniButton {
-                        id: controlLyricsBtn
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: controlQueueBtn.right
-                        anchors.leftMargin: 40
-                        regImg: "lyrics_icon.svg"
-                        pressedImg: "lyrics_icon.svg"
-                        size: 40
-                        colorDefault: secondaryColor
-                        colorMouseOver: thirdColor
-                        colorMousePressed: thirdColor
-                        //onClicked: con.f
-                    }
+//                    MiniButton {
+//                        id: controlLyricsBtn
+//                        anchors.verticalCenter: parent.verticalCenter
+//                        anchors.left: controlQueueBtn.right
+//                        anchors.leftMargin: 40
+//                        regImg: "lyrics_icon.svg"
+//                        pressedImg: "lyrics_icon.svg"
+//                        size: 40
+//                        colorDefault: secondaryColor
+//                        colorMouseOver: thirdColor
+//                        colorMousePressed: thirdColor
+//                        //onClicked: con.f
+//                    }
 
                 }
 
@@ -1322,7 +1338,7 @@ Window {
         }
 
         function onUpDatePlayImg(imgPath){
-            playBtn.image1 = imgPath;
+           playBtn.image1 = imgPath;
         }
 
         function onSetFavorites(yt_id, track, artist, album_art){
@@ -1343,6 +1359,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.5}D{i:41}
+    D{i:0;formeditorZoom:0.66}
 }
 ##^##*/
