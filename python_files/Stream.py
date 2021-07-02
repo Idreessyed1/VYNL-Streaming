@@ -7,7 +7,7 @@ class Stream:
 
     def __init__(self, yt_title, link, audio_url, track, artist, album, album_art, length, year, colors):
         self.yt_title = yt_title
-        print(yt_title)
+        # print(yt_title)
         self.link = link
         # print(link)
         self.audio_url = audio_url
