@@ -1,6 +1,7 @@
 from python_files.StreamPlayerVLC import StreamPlayerVLC
 import time
 
+
 class StreamQueue:
 
     def __init__(self, main_instance):
