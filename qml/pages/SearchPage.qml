@@ -184,18 +184,18 @@ Rectangle {
     ListModel {
         id: listModel
 
-//        ListElement{
-//            titleText: "Thriller this is a test to see how long the thing is"
-//            channelText: "Michael Jackson Topic"
-//            thumb: "../../images/temp_image.jpg"
-//        }
+        ListElement{
+            titleText: "Thriller this is a test to see how long the thing is"
+            channelText: "Michael Jackson Topic"
+            thumb: "../../images/temp_image.jpg"
+        }
     }
 
     Connections{
         target: con
 
-        function onSearchResult(index, thumb, title){
-            listModel.append({index: index, titleText: title, channelText: "Michael Jackson", thumb: thumb});
+        function onSearchResult(index, thumb, title, channel){
+            listModel.append({index: index, titleText: title, channelText: channel, thumb: thumb});
 
         }
 
@@ -207,6 +207,6 @@ Rectangle {
 }
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.5}D{i:6}D{i:9}D{i:11}
+    D{i:0;formeditorZoom:0.9}
 }
 ##^##*/
