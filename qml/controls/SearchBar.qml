@@ -8,7 +8,7 @@ Rectangle{
     id: searchBar
     x: 0
     y: 0
-    width: 820
+    width: 880
     height: 75
     color: mainColor
     radius: 20
@@ -30,11 +30,13 @@ Rectangle{
 
         TextInput {
             id: search_query
-            width: 700
             text: qsTr("Search...")
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
+            anchors.right: searchBtn.left
             font.pixelSize: 30
+            clip: true
+            anchors.rightMargin: 20
             anchors.leftMargin: 20
             font.family: foundry.name
             color: secondaryColor
@@ -67,6 +69,6 @@ Rectangle{
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.9}
+    D{i:0;formeditorZoom:0.9}D{i:3}
 }
 ##^##*/
