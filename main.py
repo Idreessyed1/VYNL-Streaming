@@ -74,7 +74,7 @@ class MainWindow(QObject):
         :param index: the index of the search result to be added to queue
         """
         search_result = self.get_search_results.select_result(index)
-        stream = self.stream_generator.create_stream(search_result.get_title(), search_result.get_link())
+        stream = self.stream_generator.create_stream(search_result.get_title(), search_result.get_yt_id())
         self.stream_queue.add_to_queue(stream)
         image_url = stream.get_album_art().replace("https://", "http://")
         image_url = image_url.replace("600x600", "200x200")
@@ -116,7 +116,8 @@ class MainWindow(QObject):
         search_results = self.get_search_results.get_results()
         self.clearSearch.emit()
         for i in range(len(search_results)):
-            self.searchResult.emit(i, search_results[i].get_thumbnail(), search_results[i].get_title())
+            self.searchResult.emit(i, search_results[i].get_thumbnail(), search_results[i].get_title(),
+                                   search_results[i].get_channel())
 
     @Slot(int)
     def save_stream(self, index):
@@ -126,8 +127,8 @@ class MainWindow(QObject):
         """
         # ADD Multi-threading
         search_result = self.get_search_results.select_result(index)
-        stream = self.stream_generator.create_stream(search_result.get_title(), search_result.get_link())
-        self.database.save_stream(stream.get_link(), stream.get_title(), stream.get_audio_url(),
+        stream = self.stream_generator.create_stream(search_result.get_title(), search_result.get_yt_id())
+        self.database.save_stream(stream.get_yt_id(), stream.get_title(), stream.get_audio_url(),
                                   stream.get_track(), stream.get_artist(), stream.get_album(), stream.get_album_art(),
                                   stream.get_length(), stream.get_year(), stream.get_main_color(),
                                   stream.get_second_color(), stream.get_third_color())
