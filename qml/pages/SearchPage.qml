@@ -54,7 +54,7 @@ Rectangle {
         delegate: Item {
             id: searchResult
             x: 5
-            width: 820
+            width: 880
             height: 100
 
             Row {
@@ -83,19 +83,19 @@ Rectangle {
                 Column{
                     id: textColumn
                     width: 400
-                    spacing: 20
+                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: searchImage.right
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
                     anchors.leftMargin: 20
-                    anchors.bottomMargin: 50
-                    anchors.topMargin: 50
 
                     Text {
                         id: resultTitleText
                         text: titleText
                         elide: Text.ElideRight
-                        width: 400
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        fontSizeMode: Text.VerticalFit
+                        anchors.leftMargin: 0
+                        anchors.rightMargin: 0
                         font.pointSize: 10
                         font.family: foundry.name
                         color: secondaryColor
@@ -111,8 +111,12 @@ Rectangle {
                         id: resultChannelText
                         text: channelText
                         elide: Text.ElideRight
-                        width: 400
-                        font.pointSize: 10
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        fontSizeMode: Text.VerticalFit
+                        anchors.leftMargin: 0
+                        anchors.rightMargin: 0
+                        font.pointSize: 5
                         font.family: foundry.name
                         color: secondaryColor
 
@@ -128,12 +132,12 @@ Rectangle {
                     id: resultTimeText
                     text: "3:54"
                     elide: Text.ElideRight
-                    height: 30
-                    width: 50
+                    height: 10
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: searchFavBtn.left
+                    fontSizeMode: Text.VerticalFit
                     anchors.rightMargin: 30
-                    font.pointSize: 20
+                    font.pointSize: 10
                     font.family: foundry.name
                     color: secondaryColor
 
@@ -180,18 +184,18 @@ Rectangle {
     ListModel {
         id: listModel
 
-        ListElement{
-            titleText: "Thriller this is a test to see how long the thing is"
-            channelText: "Michael Jackson Topic"
-            thumb: "../../images/temp_image.jpg"
-        }
+//        ListElement{
+//            titleText: "Thriller this is a test to see how long the thing is"
+//            channelText: "Michael Jackson Topic"
+//            thumb: "../../images/temp_image.jpg"
+//        }
     }
 
     Connections{
         target: con
 
         function onSearchResult(index, thumb, title){
-            listModel.append({index: index, resultTitleText: title, thumb: thumb});
+            listModel.append({index: index, titleText: title, channelText: "Michael Jackson", thumb: thumb});
 
         }
 
@@ -203,6 +207,6 @@ Rectangle {
 }
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.5}D{i:6}
+    D{i:0;formeditorZoom:0.5}D{i:6}D{i:9}D{i:11}
 }
 ##^##*/
