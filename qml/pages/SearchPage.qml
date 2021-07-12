@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import "../controls"
+import "../../images"
 import QtGraphicalEffects 1.0
 
 Rectangle {
@@ -20,7 +21,7 @@ Rectangle {
 
     Text {
         id: titleTxt
-        x: 100
+        x: 50
         y: 100
         width: 260
         height: 72
@@ -35,35 +36,43 @@ Rectangle {
     }
 
     SearchBar{
-        id:searchBar
-        x: 80
+        id: searchBar
+        x: 50
         y: 250
     }
 
     ListView {
         id: listView
-        x: 80
+        x: 50
         y: 375
-        width: 820
-        height: 803
+        width: 880
+        height: 800
         clip: true
         model: listModel
         spacing: 10
 
         delegate: Item {
+            id: searchResult
             x: 5
-            width: 680
+            width: 820
             height: 100
 
             Row {
                 id: row1
+                anchors.fill: parent
                 objectName: index
                 spacing: 10
 
                 Image {
+                    id: searchImage
                     width: 178
-                    height: 100
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
                     source: thumb
+                    anchors.bottomMargin: 0
+                    anchors.topMargin: 0
+                    anchors.leftMargin: 0
                     fillMode: Image.PreserveAspectCrop
                     MouseArea{
                         anchors.fill: parent
@@ -71,12 +80,60 @@ Rectangle {
                     }
                 }
 
-                Text {
-                    text: name
+                Column{
+                    id: textColumn
+                    width: 400
+                    spacing: 20
+                    anchors.left: searchImage.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.leftMargin: 20
+                    anchors.bottomMargin: 50
+                    anchors.topMargin: 50
+
+                    Text {
+                        id: resultTitleText
+                        text: titleText
+                        elide: Text.ElideRight
+                        width: 400
+                        font.pointSize: 10
+                        font.family: foundry.name
+                        color: secondaryColor
+
+                        MouseArea{
+                            anchors.fill: parent
+                            onClicked: con.add_to_queue(index)
+                        }
+                    }
+
+
+                    Text {
+                        id: resultChannelText
+                        text: channelText
+                        elide: Text.ElideRight
+                        width: 400
+                        font.pointSize: 10
+                        font.family: foundry.name
+                        color: secondaryColor
+
+                        MouseArea{
+                            anchors.fill: parent
+                            onClicked: con.add_to_queue(index)
+                        }
+                    }
+
+                }
+
+                Text{
+                    id: resultTimeText
+                    text: "3:54"
                     elide: Text.ElideRight
-                    width: 540
+                    height: 30
+                    width: 50
                     anchors.verticalCenter: parent.verticalCenter
-                    font.pointSize: 10
+                    anchors.right: searchFavBtn.left
+                    anchors.rightMargin: 30
+                    font.pointSize: 20
                     font.family: foundry.name
                     color: secondaryColor
 
@@ -89,6 +146,8 @@ Rectangle {
                 MiniButton {
                     id: searchFavBtn
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: searchAddBtn.left
+                    anchors.rightMargin: 20
                     size: 30
                     regImg: "star_icon.png"
                     pressedImg: "star_icon_pressed.png"
@@ -102,6 +161,8 @@ Rectangle {
                 MiniButton {
                     id: searchAddBtn
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    anchors.rightMargin: 15
                     size: 30
                     regImg: "add_icon.png"
                     pressedImg: "add_icon.png"
@@ -118,13 +179,19 @@ Rectangle {
 
     ListModel {
         id: listModel
+
+        ListElement{
+            titleText: "Thriller this is a test to see how long the thing is"
+            channelText: "Michael Jackson Topic"
+            thumb: "../../images/temp_image.jpg"
+        }
     }
 
     Connections{
         target: con
 
         function onSearchResult(index, thumb, title){
-            listModel.append({index: index, name: title, thumb: thumb});
+            listModel.append({index: index, resultTitleText: title, thumb: thumb});
 
         }
 
@@ -136,6 +203,6 @@ Rectangle {
 }
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.5}
+    D{i:0;formeditorZoom:0.5}D{i:6}
 }
 ##^##*/
