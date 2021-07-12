@@ -67,7 +67,7 @@ class DatabaseHelper:
         self.vynl_db = sqlite3.connect("Vynl_Database")
         self.cur = self.vynl_db.cursor()
         self.cur.execute("""
-                        SELECT yt_id, track, artist, album_art
+                        SELECT yt_id, track, artist, album_art, stream_length
                         FROM SavedStreams
                         """)
         return self.cur.fetchall()
