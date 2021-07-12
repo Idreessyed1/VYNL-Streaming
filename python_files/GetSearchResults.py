@@ -27,8 +27,11 @@ class GetSearchResults:
         for search_result in self.search_response.get('items', []):
             if search_result['id']['kind'] == 'youtube#video':
                 # Append a search result object containing title and video ID to the list
-                self.search_results.append(SearchResult(self.html_decode(search_result['snippet']['title']),
-                                                        search_result['id']['videoId']))
+                # print(search_result)
+                # print(search_result['id']['videoId'], search_result['snippet']['title'], search_result['snippet']['channelTitle'])
+                self.search_results.append(SearchResult(search_result['id']['videoId'],
+                                                        self.html_decode(search_result['snippet']['title']),
+                                                        self.html_decode(search_result['snippet']['channelTitle'])))
 
     def display_results(self):
         """
@@ -63,3 +66,8 @@ class GetSearchResults:
         for code in htmlCodes:
             s = s.replace(code[1], code[0])
         return s
+
+
+# searchResult = GetSearchResults()
+# searchResult.search("michael jackson topic")
+
