@@ -25,13 +25,13 @@ class MainWindow(QObject):
         self.stream_generator = StreamGenerator()
         # print(threading.get_ident())
 
-    searchResult = Signal(int, str, str)
+    searchResult = Signal(int, str, str, str)
     updateQueue = Signal(str, str, str, str)
     setPlayer = Signal(str, str, str, str, str, str, str, str, str, str)
     setProgress = Signal(str, float)
     clearSearch = Signal()  # Clears search results in UI
     upDatePlayImg = Signal(str)
-    setFavorites = Signal(str, str, str, str)
+    setFavorites = Signal(str, str, str, str, str)
     clearFavorites = Signal()
 
     def play_queue(self):
@@ -128,7 +128,7 @@ class MainWindow(QObject):
         # ADD Multi-threading
         search_result = self.get_search_results.select_result(index)
         stream = self.stream_generator.create_stream(search_result.get_title(), search_result.get_yt_id())
-        self.database.save_stream(stream.get_yt_id(), stream.get_title(), stream.get_audio_url(),
+        self.database.save_stream(stream.get_link(), stream.get_title(), stream.get_audio_url(),
                                   stream.get_track(), stream.get_artist(), stream.get_album(), stream.get_album_art(),
                                   stream.get_length(), stream.get_year(), stream.get_main_color(),
                                   stream.get_second_color(), stream.get_third_color())
@@ -143,7 +143,7 @@ class MainWindow(QObject):
         self.clearFavorites.emit()
         favorites = self.database.get_streams()
         for favorite in favorites:
-            self.setFavorites.emit(favorite[0], favorite[1], favorite[2], favorite[3])
+            self.setFavorites.emit(favorite[0], favorite[1], favorite[2], favorite[3], favorite[4])
 
     @Slot(float)
     def seek(self, seek_time):
