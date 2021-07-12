@@ -35,70 +35,135 @@ Rectangle {
 
     SearchBar{
         id:searchBar
-        x: 80
+        x: 50
         y: 250
     }
 
     ListView {
         id: listView
-        x: 80
+        x: 50
         y: 375
-        width: 820
-        height: 803
+        width: 880
+        height: 800
         clip: true
         model: listModel
         spacing: 10
 
         delegate: Item {
+            id: favorite
             x: 5
-            width: 800
+            width: 880
             height: 100
             property string ytID: yt_id
 
+
             Row {
                 id: row1
+                anchors.fill: parent
                 objectName: index2
                 spacing: 10
 
                 Image {
-                    width: 100
+                    id: favoriteImage
                     height: 100
+                    width: 100
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
                     source: thumb
-                    fillMode: Image.PreserveAspectCrop
+                    anchors.bottomMargin: 0
+                    anchors.topMargin: 0
+                    anchors.leftMargin: 0
+
+                    property bool rounded: true
+                    property bool adapt: true
+
+                    layer.enabled: rounded
+                    layer.effect: OpacityMask {
+                        maskSource: Item {
+                            width: favoriteImage.width
+                            height: favoriteImage.height
+                            Rectangle {
+                                anchors.centerIn: parent
+                                width: favoriteImage.adapt ? favoriteImage.width : Math.min(favoriteImage.width, favoriteImage.height)
+                                height: favoriteImage.adapt ? favoriteImage.height : width
+                                radius: 50
+                            }
+                        }
+                    }
+
+
+
+
+
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked: con.add_to_queue(index)
+                    }
                 }
 
                 Column{
-
-                    width: 540
-                    anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 100
-                    anchors.topMargin: 0
+                    id: textColumn
+                    width: 425
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: favoriteImage.right
+                    anchors.leftMargin: 20
 
                     Text {
-                        text: name
+                        id: favoriteTitleText
+                        text: titleText
                         elide: Text.ElideRight
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: 540
-                        font.pointSize: 12
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        fontSizeMode: Text.FixedSize
+                        anchors.leftMargin: 0
+                        anchors.rightMargin: 0
+                        font.pixelSize: 25
+                        font.family: foundry.name
+                        color: secondaryColor
+
+                        MouseArea{
+                            anchors.fill: parent
+                            onClicked: con.add_to_queue(index)
+                        }
+                    }
+
+
+                    Text {
+                        id: favoriteChannelText
+                        text: artistText
+                        elide: Text.ElideRight
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        fontSizeMode: Text.FixedSize
+                        anchors.leftMargin: 0
+                        anchors.rightMargin: 0
+                        font.pixelSize: 22
                         font.family: foundry.name
                         color: secondaryColor
                     }
 
-                    Text {
-                        text: name2
-                        elide: Text.ElideRight
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: 540
-                        font.pointSize: 10
-                        font.family: foundry.name
-                        color: secondaryColor
-                    }
+                }
+
+                Text{
+                    id: favoriteTimeText
+                    text: timeText
+                    elide: Text.ElideRight
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: favoriteFavBtn.left
+                    fontSizeMode: Text.FixedSize
+                    anchors.rightMargin: 30
+                    font.family: foundry.name
+                    font.pixelSize: 25
+                    color: secondaryColor
+
                 }
 
                 MiniButton {
-                    id: searchFavBtn
+                    id: favoriteFavBtn
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: favoriteAddBtn.left
+                    anchors.rightMargin: 20
                     size: 30
                     regImg:"star_icon_pressed.png"
                     pressedImg:"star_icon.png"
@@ -109,11 +174,14 @@ Rectangle {
                         listView.model.remove(index)
                         con.delete_stream(ytID)
                     }
+
                 }
 
                 MiniButton {
-                    id: searchAddBtn
+                    id: favoriteAddBtn
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    anchors.rightMargin: 15
                     size: 30
                     regImg: "add_icon.png"
                     pressedImg: "add_icon.png"
@@ -121,7 +189,6 @@ Rectangle {
                     colorMouseOver: mainColor
                     colorMousePressed: mainColor
                     onClicked: con.add_fav_queue(row1.objectName)
-
                 }
             }
         }
@@ -141,21 +208,23 @@ Rectangle {
         }
     }
 
+
     ListModel {
         id: listModel
 
         ListElement{
             yt_id:"123"
             index2: "3232"
-            name: "This is a Test"
-            name2: "Micheal jackson"
+            thumb: "../../images/temp_image.jpg"
+            titleText: "This is a Test"
+            artistText: "Micheal jackson"
         }
     }
 
     Connections{
         target: con
-        function onSetFavorites(yt_id1, track, artist, album_art){
-            listModel.append({yt_id: yt_id1, index2: yt_id1, name: track, name2: artist, thumb: album_art});
+        function onSetFavorites(yt_id1, track, artist, album_art, time){
+            listModel.append({yt_id: yt_id1, index2: yt_id1, titleText: track, artistText: artist, thumb: album_art, timeText: time});
         }
 
         function onClearFavorites(){
@@ -166,6 +235,6 @@ Rectangle {
 }
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.9}
+    D{i:0;formeditorZoom:0.33}
 }
 ##^##*/

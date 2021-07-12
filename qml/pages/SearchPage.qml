@@ -82,7 +82,7 @@ Rectangle {
 
                 Column{
                     id: textColumn
-                    width: 400
+                    width: 425
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: searchImage.right
                     anchors.leftMargin: 20
@@ -93,10 +93,10 @@ Rectangle {
                         elide: Text.ElideRight
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        fontSizeMode: Text.VerticalFit
+                        fontSizeMode: Text.FixedSize
                         anchors.leftMargin: 0
                         anchors.rightMargin: 0
-                        font.pointSize: 10
+                        font.pixelSize: 25
                         font.family: foundry.name
                         color: secondaryColor
 
@@ -113,10 +113,10 @@ Rectangle {
                         elide: Text.ElideRight
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        fontSizeMode: Text.VerticalFit
+                        fontSizeMode: Text.FixedSize
                         anchors.leftMargin: 0
                         anchors.rightMargin: 0
-                        font.pointSize: 5
+                        font.pixelSize: 22
                         font.family: foundry.name
                         color: secondaryColor
 
@@ -132,13 +132,12 @@ Rectangle {
                     id: resultTimeText
                     text: "3:54"
                     elide: Text.ElideRight
-                    height: 10
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: searchFavBtn.left
-                    fontSizeMode: Text.VerticalFit
+                    fontSizeMode: Text.FixedSize
                     anchors.rightMargin: 30
-                    font.pointSize: 10
                     font.family: foundry.name
+                    font.pixelSize: 25
                     color: secondaryColor
 
                     MouseArea{
@@ -179,16 +178,30 @@ Rectangle {
             }
         }
 
+        add: Transition {
+                NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 400 }
+                NumberAnimation { property: "scale"; from: 0; to: 1.0; duration: 400 }
+            }
+
+        remove: Transition {
+                NumberAnimation { property: "opacity"; from: 1.0; to: 0; duration: 400 }
+                NumberAnimation { property: "scale"; from: 1.0; to: 0; duration: 400 }
+            }
+
+        displaced: Transition {
+            NumberAnimation { properties: "x,y"; duration: 400; easing.type: Easing.InOutQuint }
+        }
+
     }
 
     ListModel {
         id: listModel
 
-        ListElement{
-            titleText: "Thriller this is a test to see how long the thing is"
-            channelText: "Michael Jackson Topic"
-            thumb: "../../images/temp_image.jpg"
-        }
+//        ListElement{
+//            titleText: "Thriller this is a test to see how long the thing is"
+//            channelText: "Michael Jackson Topic"
+//            thumb: "../../images/temp_image.jpg"
+//        }
     }
 
     Connections{
@@ -207,6 +220,6 @@ Rectangle {
 }
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.9}
+    D{i:0;formeditorZoom:0.25}
 }
 ##^##*/
