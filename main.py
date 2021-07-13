@@ -25,7 +25,7 @@ class MainWindow(QObject):
         self.stream_generator = StreamGenerator()
         # print(threading.get_ident())
 
-    searchResult = Signal(int, str, str, str)
+    searchResult = Signal(str, str, str, str)
     updateQueue = Signal(str, str, str, str)
     setPlayer = Signal(str, str, str, str, str, str, str, str, str, str)
     setProgress = Signal(str, float)
@@ -65,14 +65,13 @@ class MainWindow(QObject):
         """ Updates stream playback progress in the UI (time and slider) """
         self.setProgress.emit(self.stream_queue.get_current_time_formatted(), self.stream_queue.get_percentage())
 
-    @Slot(int)
-    def add_to_queue(self, index):
+    @Slot(str)
+    def add_to_queue(self, yt_id):
         """
         Adds a stream to the queue and plays it if its the first stream.
-        :param index: the index of the search result to be added to queue
+        :param yt_id: the YouTube ID of the search result to be added to queue
         """
-        search_result = self.get_search_results.select_result(index)
-        stream = self.stream_generator.create_stream(search_result.get_title(), search_result.get_yt_id())
+        stream = self.stream_generator.create_stream(yt_id)
         self.stream_queue.add_to_queue(stream)
         image_url = stream.get_album_art().replace("https://", "http://")
         image_url = image_url.replace("600x600", "200x200")
