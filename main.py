@@ -25,7 +25,7 @@ class MainWindow(QObject):
         self.stream_generator = StreamGenerator()
         # print(threading.get_ident())
 
-    searchResult = Signal(str, str, str, str)
+    searchResult = Signal(str, str, str, str, str, str)
     updateQueue = Signal(str, str, str, str)
     setPlayer = Signal(str, str, str, str, str, str, str, str, str, str)
     setProgress = Signal(str, float)
@@ -52,7 +52,8 @@ class MainWindow(QObject):
         try:
             up_next_track = self.stream_queue.get_stream(self.stream_queue.get_stream_position() + 1).get_track()
             up_next_artist = self.stream_queue.get_stream(self.stream_queue.get_stream_position() + 1).get_artist()
-            up_next_album_art = self.stream_queue.get_stream(self.stream_queue.get_stream_position() + 1).get_album_art()
+            up_next_album_art = self.stream_queue.get_stream(
+                self.stream_queue.get_stream_position() + 1).get_album_art()
         except IndexError:
             up_next_track = "Add more songs"
             up_next_artist = ""
@@ -112,9 +113,14 @@ class MainWindow(QObject):
         search_results = self.get_search_results.search(search_query)
         self.clearSearch.emit()
         for search_result in search_results:
-            #if self.database.check_yt_id(search_result.get_yt_id()):
-            self.searchResult.emit(search_result.get_yt_id(), search_result.get_title(), search_result.get_channel(),
-                                   search_result.get_thumbnail())
+            if self.database.check_yt_id(search_result.get_yt_id()):
+                self.searchResult.emit(search_result.get_yt_id(), search_result.get_title(),
+                                       search_result.get_channel(), search_result.get_thumbnail(),
+                                       "star_icon_pressed.png", "star_icon.png")
+            else:
+                self.searchResult.emit(search_result.get_yt_id(), search_result.get_title(),
+                                       search_result.get_channel(), search_result.get_thumbnail(),
+                                       "star_icon.png", "star_icon_pressed.png")
 
     @Slot(str)
     def save_stream(self, yt_id):
@@ -123,7 +129,7 @@ class MainWindow(QObject):
         :param yt_id: the YouTube ID of the search result to be saved
         """
         # ADD Multi-threading
-        #search_result = self.get_search_results.select_result(index)
+        # search_result = self.get_search_results.select_result(index)
         stream = self.stream_generator.create_stream(yt_id)
         self.database.save_stream(stream.get_link(), stream.get_title(), stream.get_track(), stream.get_artist(),
                                   stream.get_album(), stream.get_album_art(), stream.get_length(), stream.get_year(),
