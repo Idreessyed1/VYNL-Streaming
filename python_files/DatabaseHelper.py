@@ -16,7 +16,6 @@ class DatabaseHelper:
             CREATE TABLE if NOT EXISTS SavedStreams(
                 yt_id text primary key,
                 title text,
-                audio_url text,
                 track text,
                 artist text,
                 album text,
@@ -30,7 +29,7 @@ class DatabaseHelper:
         self.vynl_db.commit()
         self.vynl_db.close()
 
-    def save_stream(self, yt_id, title, audio_url, track, artist, album, album_art, stream_length, stream_year,
+    def save_stream(self, yt_id, title, track, artist, album, album_art, stream_length, stream_year,
                     color1, color2, color3):
         """
         Saves stream to database
@@ -38,8 +37,8 @@ class DatabaseHelper:
         #  ADD TR EXCEPT block in case id is the same
         self.vynl_db = sqlite3.connect("Vynl_Database")
         self.cur = self.vynl_db.cursor()
-        self.cur.execute("INSERT INTO SavedStreams VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                         (yt_id, title, audio_url, track, artist, album, album_art, stream_length, stream_year,
+        self.cur.execute("INSERT INTO SavedStreams VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                         (yt_id, title, track, artist, album, album_art, stream_length, stream_year,
                           color1, color2, color3))
         self.vynl_db.commit()
         self.vynl_db.close()
@@ -59,7 +58,7 @@ class DatabaseHelper:
         self.vynl_db.commit()
         self.vynl_db.close()
 
-    def get_streams(self):
+    def get_favorites(self):
         """
         Grabs all stream from database
         :return: tuple of all streams
@@ -81,10 +80,11 @@ class DatabaseHelper:
         self.vynl_db = sqlite3.connect("Vynl_Database")
         self.cur = self.vynl_db.cursor()
         self.cur.execute("""
-                        SELECT title, yt_id, audio_url, track, artist, album, album_art, stream_length, stream_year,
-                         mainColor, secondColor, thirdColor
+                        SELECT title, yt_id, track, artist, album, album_art, stream_length, stream_year,
+                                mainColor, secondColor, thirdColor
                         FROM SavedStreams
-                        WHERE yt_id == (?)""", (yt_id,))
+                        WHERE yt_id == (?)
+                        """, (yt_id,))
 
         return self.cur.fetchone()
 
@@ -93,12 +93,25 @@ class DatabaseHelper:
         self.cur = self.vynl_db.cursor()
         try:
             self.cur.execute("""
-                                    SELECT yt_id
-                                    FROM SavedStreams;
-                                    """)
+                            SELECT yt_id
+                            FROM SavedStreams;
+                             """)
             return self.cur.fetchall()
         except TypeError:
             return 0
+
+    def check_yt_id(self, yt_id):
+        self.vynl_db = sqlite3.connect("Vynl_Database")
+        self.cur = self.vynl_db.cursor()
+        self.cur.execute("""SELECT yt_id
+                            FROM SavedStreams
+                            WHERE yt_id=?
+                           """, (yt_id,))
+        result = self.cur.fetchone()
+        if result:
+            return True
+        else:
+            return False
 
     def get_last_id(self):
         self.vynl_db = sqlite3.connect("Vynl_Database")
