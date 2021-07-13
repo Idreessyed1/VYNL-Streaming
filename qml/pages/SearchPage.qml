@@ -57,6 +57,9 @@ Rectangle {
             width: 880
             height: 100
 
+            property string ytID: yt_id
+
+
             Row {
                 id: row1
                 anchors.fill: parent
@@ -76,7 +79,7 @@ Rectangle {
                     fillMode: Image.PreserveAspectCrop
                     MouseArea{
                         anchors.fill: parent
-                        onClicked: con.add_to_queue(index)
+                        onClicked: con.add_to_queue(searchResult.ytID)
                     }
                 }
 
@@ -102,7 +105,7 @@ Rectangle {
 
                         MouseArea{
                             anchors.fill: parent
-                            onClicked: con.add_to_queue(index)
+                            onClicked: con.add_to_queue(searchResult.ytID)
                         }
                     }
 
@@ -122,7 +125,7 @@ Rectangle {
 
                         MouseArea{
                             anchors.fill: parent
-                            onClicked: con.add_to_queue(index)
+                            onClicked: con.add_to_queue(searchResult.ytID)
                         }
                     }
 
@@ -142,7 +145,7 @@ Rectangle {
 
                     MouseArea{
                         anchors.fill: parent
-                        onClicked: con.add_to_queue(index)
+                        onClicked: con.add_to_queue(searchResult.ytID)
                     }
                 }
 
@@ -172,7 +175,7 @@ Rectangle {
                     colorDefault: secondaryColor
                     colorMouseOver: mainColor
                     colorMousePressed: mainColor
-                    onClicked: con.add_to_queue(index)
+                    onClicked: con.add_to_queue(searchResult.ytID)
 
                 }
             }
@@ -207,10 +210,13 @@ Rectangle {
     Connections{
         target: con
 
-        function onSearchResult(index, thumb, title, channel){
-            listModel.append({index: index, titleText: title, channelText: channel, thumb: thumb});
-
+        function onSearchResult(yt_id, title, channel, thumb){
+            listModel.append({yt_id: yt_id, titleText: title, channelText: channel, thumb: thumb});
         }
+
+//        function onSearchResult(index, thumb, title, channel){
+//            listModel.append({index: index, titleText: title, channelText: channel, thumb: thumb});
+//        }
 
         function onClearSearch(){
             listModel.clear();
