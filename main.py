@@ -110,25 +110,21 @@ class MainWindow(QObject):
         :param search_query: the query to be searched
         """
         search_results = self.get_search_results.search(search_query)
-        # search_results = self.get_search_results.get_results()
         self.clearSearch.emit()
-        # for i in range(len(search_results)):
-        #     self.searchResult.emit(i, search_results[i].get_thumbnail(), search_results[i].get_title(),
-        #                            search_results[i].get_channel())
-
         for search_result in search_results:
+            #if self.database.check_yt_id(search_result.get_yt_id()):
             self.searchResult.emit(search_result.get_yt_id(), search_result.get_title(), search_result.get_channel(),
                                    search_result.get_thumbnail())
 
-    @Slot(int)
-    def save_stream(self, index):
+    @Slot(str)
+    def save_stream(self, yt_id):
         """
         Saves a stream to the database
-        :param index: the index of the search result to be saved
+        :param yt_id: the YouTube ID of the search result to be saved
         """
         # ADD Multi-threading
-        search_result = self.get_search_results.select_result(index)
-        stream = self.stream_generator.create_stream(search_result.get_title(), search_result.get_yt_id())
+        #search_result = self.get_search_results.select_result(index)
+        stream = self.stream_generator.create_stream(yt_id)
         self.database.save_stream(stream.get_link(), stream.get_title(), stream.get_track(), stream.get_artist(),
                                   stream.get_album(), stream.get_album_art(), stream.get_length(), stream.get_year(),
                                   stream.get_main_color(), stream.get_second_color(), stream.get_third_color())
