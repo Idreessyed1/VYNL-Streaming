@@ -62,9 +62,7 @@ class MainWindow(QObject):
                             secondary_color, third_color, up_next_track, up_next_artist, up_next_album_art)
 
     def update_progress(self):
-        """
-        Updates stream playback progress in the UI (time and slider)
-        """
+        """ Updates stream playback progress in the UI (time and slider) """
         self.setProgress.emit(self.stream_queue.get_current_time_formatted(), self.stream_queue.get_percentage())
 
     @Slot(int)
@@ -91,7 +89,7 @@ class MainWindow(QObject):
         fav_stream = self.database.get_stream(yt_id)
         stream = self.stream_generator.create_db_stream(fav_stream[0], fav_stream[1], fav_stream[2], fav_stream[3],
                                                         fav_stream[4], fav_stream[5], fav_stream[6], fav_stream[7],
-                                                        fav_stream[8], fav_stream[9], fav_stream[10], fav_stream[11])
+                                                        fav_stream[8], fav_stream[9], fav_stream[10])
         self.stream_queue.add_to_queue(stream)
         image_url = stream.get_album_art().replace("https://", "http://")
         image_url = image_url.replace("600x600", "200x200")
@@ -112,12 +110,16 @@ class MainWindow(QObject):
         Searched the query in the GetSearchResults class and sends it to the front end
         :param search_query: the query to be searched
         """
-        self.get_search_results.search(search_query)
-        search_results = self.get_search_results.get_results()
+        search_results = self.get_search_results.search(search_query)
+        # search_results = self.get_search_results.get_results()
         self.clearSearch.emit()
-        for i in range(len(search_results)):
-            self.searchResult.emit(i, search_results[i].get_thumbnail(), search_results[i].get_title(),
-                                   search_results[i].get_channel())
+        # for i in range(len(search_results)):
+        #     self.searchResult.emit(i, search_results[i].get_thumbnail(), search_results[i].get_title(),
+        #                            search_results[i].get_channel())
+
+        for search_result in search_results:
+            self.searchResult.emit(search_result.get_yt_id(), search_result.get_title(), search_result.get_channel(),
+                                   search_result.get_thumbnail())
 
     @Slot(int)
     def save_stream(self, index):
@@ -128,20 +130,22 @@ class MainWindow(QObject):
         # ADD Multi-threading
         search_result = self.get_search_results.select_result(index)
         stream = self.stream_generator.create_stream(search_result.get_title(), search_result.get_yt_id())
-        self.database.save_stream(stream.get_link(), stream.get_title(), stream.get_audio_url(),
-                                  stream.get_track(), stream.get_artist(), stream.get_album(), stream.get_album_art(),
-                                  stream.get_length(), stream.get_year(), stream.get_main_color(),
-                                  stream.get_second_color(), stream.get_third_color())
+        self.database.save_stream(stream.get_link(), stream.get_title(), stream.get_track(), stream.get_artist(),
+                                  stream.get_album(), stream.get_album_art(), stream.get_length(), stream.get_year(),
+                                  stream.get_main_color(), stream.get_second_color(), stream.get_third_color())
 
     @Slot(str)
     def delete_stream(self, yt_id):
         self.database.delete_stream(yt_id)
 
+    def save_delete_stream(self):
+        pass
+
     @Slot()
     def get_favorites(self):
         """ Grabs all the favorites from the database and sends it to the UI"""
         self.clearFavorites.emit()
-        favorites = self.database.get_streams()
+        favorites = self.database.get_favorites()
         for favorite in favorites:
             self.setFavorites.emit(favorite[0], favorite[1], favorite[2], favorite[3], favorite[4])
 
