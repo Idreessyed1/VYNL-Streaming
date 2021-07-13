@@ -92,13 +92,9 @@ Rectangle {
                         }
                     }
 
-
-
-
-
                     MouseArea{
                         anchors.fill: parent
-                        onClicked: con.add_to_queue(index)
+                        onClicked: con.add_fav_queue(row1.objectName)
                     }
                 }
 
