@@ -32,6 +32,7 @@ class GetSearchResults:
                 self.search_results.append(SearchResult(search_result['id']['videoId'],
                                                         self.html_decode(search_result['snippet']['title']),
                                                         self.html_decode(search_result['snippet']['channelTitle'])))
+        return self.search_results
 
     def display_results(self):
         """
