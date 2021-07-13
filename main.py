@@ -123,23 +123,6 @@ class MainWindow(QObject):
                                        "star_icon.png", "star_icon_pressed.png")
 
     @Slot(str)
-    def save_stream(self, yt_id):
-        """
-        Saves a stream to the database
-        :param yt_id: the YouTube ID of the search result to be saved
-        """
-        # ADD Multi-threading
-        # search_result = self.get_search_results.select_result(index)
-        stream = self.stream_generator.create_stream(yt_id)
-        self.database.save_stream(stream.get_link(), stream.get_title(), stream.get_track(), stream.get_artist(),
-                                  stream.get_album(), stream.get_album_art(), stream.get_length(), stream.get_year(),
-                                  stream.get_main_color(), stream.get_second_color(), stream.get_third_color())
-
-    @Slot(str)
-    def delete_stream(self, yt_id):
-        self.database.delete_stream(yt_id)
-
-    @Slot(str)
     def save_delete_stream(self, yt_id):
         """
         Saves or deletes a stream from the database
