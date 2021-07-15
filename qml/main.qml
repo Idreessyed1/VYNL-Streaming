@@ -601,7 +601,7 @@ Window {
                             //regImg: "play.png"
                             //pressedImg: "play.png"
                             image1: "play.png"
-                            //onClicked: { con.pause_stream()}
+                            onClicked: { con.pause_stream()}
                         }
 
                         MiniButton {
