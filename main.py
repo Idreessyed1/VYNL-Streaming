@@ -13,6 +13,15 @@ from python_files.DatabaseHelper import DatabaseHelper
 
 class MainWindow(QObject):
 
+    searchResult = Signal(str, str, str, str, str, str)
+    updateQueue = Signal(str, str, str, str)
+    setPlayer = Signal(str, str, str, str, str, str, str, str, str, str)
+    setProgress = Signal(str, float)
+    clearSearch = Signal()  # Clears search results in UI
+    upDatePlayImg = Signal(str)
+    setFavorites = Signal(str, str, str, str, str)
+    clearFavorites = Signal()
+
     def __init__(self):
         QObject.__init__(self)
         self.timer = QTimer()
@@ -23,16 +32,7 @@ class MainWindow(QObject):
         self.get_search_results = GetSearchResults()
         self.stream_queue = StreamQueue(self)  # Has an instance of main to update player
         self.stream_generator = StreamGenerator()
-        # print(threading.get_ident())
-
-    searchResult = Signal(str, str, str, str, str, str)
-    updateQueue = Signal(str, str, str, str)
-    setPlayer = Signal(str, str, str, str, str, str, str, str, str, str)
-    setProgress = Signal(str, float)
-    clearSearch = Signal()  # Clears search results in UI
-    upDatePlayImg = Signal(str)
-    setFavorites = Signal(str, str, str, str, str)
-    clearFavorites = Signal()
+        #print(threading.get_ident())
 
     def play_queue(self):
         # If the stream to be played is the first stream, start playback of queue on a separate thread.
@@ -64,7 +64,10 @@ class MainWindow(QObject):
 
     def update_progress(self):
         """ Updates stream playback progress in the UI (time and slider) """
-        self.setProgress.emit(self.stream_queue.get_current_time_formatted(), self.stream_queue.get_percentage())
+        try:
+            self.setProgress.emit(self.stream_queue.get_current_time_formatted(), self.stream_queue.get_percentage())
+        except:
+            pass
 
     @Slot(str)
     def add_to_queue(self, yt_id):
@@ -160,10 +163,10 @@ class MainWindow(QObject):
         """
         self.stream_queue.pause_stream()
         if self.play_img_val == 0:
-            self.upDatePlayImg.emit("pause_icon.png")
+            self.upDatePlayImg.emit("pause.png")
             self.play_img_val = 1
         else:
-            self.upDatePlayImg.emit("play_icon.png")
+            self.upDatePlayImg.emit("play.png")
             self.play_img_val = 0
 
     # Moves to previous stream
