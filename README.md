@@ -29,9 +29,10 @@
 
 <hr>
 
-![alt text](https://github.com/Idreessyed1/VYNL-Streaming/blob/master/images/readme_images/home_page1.PNG?raw=true)  |  ![alt text](https://github.com/Idreessyed1/VYNL-Streaming/blob/master/images/readme_images/home_page_2.PNG?raw=true)
+![alt text](https://github.com/Idreessyed1/VYNL-Streaming/blob/master/images/readme_images/main_page_V2.PNG?raw=true)  |  ![alt text](https://github.com/Idreessyed1/VYNL-Streaming/blob/master/images/readme_images/main_page_2_V2.PNG?raw=true)
 :-------------------------:|:-------------------------:
-![alt text](https://github.com/Idreessyed1/VYNL-Streaming/blob/master/images/readme_images/search_page.PNG?raw=true)
+![alt text](https://github.com/Idreessyed1/VYNL-Streaming/blob/master/images/readme_images/search_page_V2.PNG?raw=true) | ![alt text](https://github.com/Idreessyed1/VYNL-Streaming/blob/master/images/readme_images/favorites_page_V2.PNG?raw=true)
+
     
 ## About
 Vynl is a simple desktop streaming application to stream, play, save, and download all your favorite music. Vynl is avaliable for Windsows, MacOS, and Linux.
