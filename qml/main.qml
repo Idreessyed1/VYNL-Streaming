@@ -1341,8 +1341,8 @@ Window {
            playBtn.image1 = imgPath;
         }
 
-        function onSetFavorites(yt_id, track, artist, album_art){
-            //listModel.append({index: yt_id, name: track, thumb: album_art});
+        function onSetFavorites(yt_id1, track, artist, album_art, time){
+            //listModel.append({yt_id: yt_id1, titleText: track, artistText: artist, thumb: album_art, timeText: time});
         }
 
         function onClearFavorites(){
