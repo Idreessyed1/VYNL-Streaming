@@ -94,7 +94,7 @@ Rectangle {
 
                     MouseArea{
                         anchors.fill: parent
-                        onClicked: con.add_fav_queue(row1.objectName)
+                        onClicked: con.add_fav_queue(favorite.ytID)
                     }
                 }
 
@@ -120,7 +120,7 @@ Rectangle {
 
                         MouseArea{
                             anchors.fill: parent
-                            onClicked: con.add_to_queue(index)
+                            onClicked: con.add_fav_queue(favorite.ytID)
                         }
                     }
 
@@ -168,7 +168,7 @@ Rectangle {
                     colorMousePressed: mainColor
                     onClicked: {
                         listView.model.remove(index)
-                        con.delete_stream(ytID)
+                        con.save_delete_stream(favorite.ytID)
                     }
 
                 }
@@ -184,7 +184,7 @@ Rectangle {
                     colorDefault: secondaryColor
                     colorMouseOver: mainColor
                     colorMousePressed: mainColor
-                    onClicked: con.add_fav_queue(row1.objectName)
+                    onClicked: con.add_fav_queue(favorite.ytID)
                 }
             }
         }
@@ -210,17 +210,17 @@ Rectangle {
 
         ListElement{
             yt_id:"123"
-            index2: "3232"
             thumb: "../../images/temp_image.jpg"
             titleText: "This is a Test"
             artistText: "Micheal jackson"
+            timeText: "3:27"
         }
     }
 
     Connections{
         target: con
         function onSetFavorites(yt_id1, track, artist, album_art, time){
-            listModel.append({yt_id: yt_id1, index2: yt_id1, titleText: track, artistText: artist, thumb: album_art, timeText: time});
+            listModel.append({yt_id: yt_id1, titleText: track, artistText: artist, thumb: album_art, timeText: time});
         }
 
         function onClearFavorites(){
