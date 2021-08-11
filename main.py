@@ -146,6 +146,7 @@ class MainWindow(QObject):
         self.clearFavorites.emit()
         favorites = self.database.get_favorites()
         for favorite in favorites:
+            print(favorite[0], favorite[1], favorite[2], favorite[3], favorite[4])
             self.setFavorites.emit(favorite[0], favorite[1], favorite[2], favorite[3], favorite[4])
 
     @Slot(float)
@@ -178,6 +179,9 @@ class MainWindow(QObject):
     @Slot()
     def next_stream(self):
         self.stream_queue.next_stream()
+
+    def download(self):
+        pass
 
 
 if __name__ == "__main__":
