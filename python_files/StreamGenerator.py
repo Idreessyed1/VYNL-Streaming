@@ -16,7 +16,7 @@ class StreamGenerator:
     def __init__(self):
         self.ydl = youtube_dl.YoutubeDL({})
 
-    def create_stream(self, title, yt_id):
+    def create_stream(self, yt_id):
         """
         Creates a stream and populates it from iTunes or YouTube
         :param title: stream title
@@ -27,6 +27,7 @@ class StreamGenerator:
         # Link starts with https://youtube.com/....
         video = self.ydl.extract_info(url, download=False)  # find out how to quiet print
         pafy_file = pafy.new(url)
+        title = pafy_file.title
         best_audio = pafy_file.getbestaudio()
         audio_url = best_audio.url
 
@@ -47,14 +48,14 @@ class StreamGenerator:
             stream = self.set_metadata_yt(video, title, url, audio_url)
         return stream
 
-    def create_db_stream(self, yt_title, link, audio_url, track, artist, album, album_art, length, year,
+    def create_db_stream(self, yt_title, link, track, artist, album, album_art, length, year,
                          main_color, second_color, third_color):
         """
         Populates a saved stream stream from the db
         :return: populated stream
         """
         colors = [main_color, second_color, third_color]
-        pafy_file = pafy.new("https://www.youtube.com/watch?v="+link)
+        pafy_file = pafy.new("https://www.youtube.com/watch?v=" + link)
         best_audio = pafy_file.getbestaudio()
         audio_url2 = best_audio.url
         stream = Stream(yt_title, link, audio_url2, track, artist, album, album_art, length, year, colors)

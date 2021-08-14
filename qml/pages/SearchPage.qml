@@ -155,12 +155,12 @@ Rectangle {
                     anchors.right: searchAddBtn.left
                     anchors.rightMargin: 20
                     size: 30
-                    regImg: "star_icon.png"
-                    pressedImg: "star_icon_pressed.png"
+                    regImg: regStar
+                    pressedImg: pressStar
                     colorDefault: secondaryColor
                     colorMouseOver: mainColor
                     colorMousePressed: mainColor
-                    onClicked: con.save_stream(index)
+                    onClicked: con.save_delete_stream(searchResult.ytID)
 
                 }
 
@@ -210,8 +210,8 @@ Rectangle {
     Connections{
         target: con
 
-        function onSearchResult(yt_id, title, channel, thumb){
-            listModel.append({yt_id: yt_id, titleText: title, channelText: channel, thumb: thumb});
+        function onSearchResult(yt_id, title, channel, thumb, regStar, pressStar){
+            listModel.append({yt_id: yt_id, titleText: title, channelText: channel, thumb: thumb, regStar: regStar, pressStar: pressStar});
         }
 
 //        function onSearchResult(index, thumb, title, channel){
