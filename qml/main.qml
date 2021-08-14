@@ -1148,7 +1148,7 @@ Window {
                         colorDefault: secondaryColor
                         colorMouseOver: thirdColor
                         colorMousePressed: thirdColor
-                        //onClicked: con.f
+                        onClicked: con.download()
                     }
 
                     MiniButton {
