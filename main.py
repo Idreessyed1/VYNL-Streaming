@@ -9,6 +9,7 @@ from python_files.GetSearchResults import GetSearchResults
 from python_files.StreamQueue import StreamQueue
 from python_files.StreamGenerator import StreamGenerator
 from python_files.DatabaseHelper import DatabaseHelper
+from python_files.Downloader import Downloader
 
 
 class MainWindow(QObject):
@@ -32,6 +33,7 @@ class MainWindow(QObject):
         self.get_search_results = GetSearchResults()
         self.stream_queue = StreamQueue(self)  # Has an instance of main to update player
         self.stream_generator = StreamGenerator()
+        self.downloader = Downloader()
         #print(threading.get_ident())
 
     def play_queue(self):
@@ -180,8 +182,11 @@ class MainWindow(QObject):
     def next_stream(self):
         self.stream_queue.next_stream()
 
+    @Slot()
     def download(self):
-        pass
+        stream = self.stream_queue.get_current_stream()
+        if self.stream_queue.get_size() > 0:
+            self.downloader.download(stream.get_link(), stream.get_title())
 
 
 if __name__ == "__main__":
