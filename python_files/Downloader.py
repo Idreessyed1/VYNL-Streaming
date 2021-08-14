@@ -2,13 +2,16 @@ import tkinter
 from tkinter import filedialog
 import os
 import pafy
-
+import youtube_dl
 
 class Downloader:
 
     def __init__(self):
         self.root = tkinter.Tk()
         self.root.withdraw()  # use to hide tkinter window
+
+    def convert(self):
+        pass
 
     def file_path(self):
         """
@@ -17,16 +20,21 @@ class Downloader:
         """
         currdir = os.getcwd()
         tempdir = filedialog.askdirectory(parent=self.root, initialdir=currdir, title='Please select a directory')
-        if len(tempdir) > 0:
-            print("You chose: %s" % tempdir)
+        # if len(tempdir) > 0:
+        #     print("You chose: %s" % tempdir)
         return tempdir
 
-    def download(self, yt_id):
-        pafy_file = pafy.new(yt_id)
+    def download(self, yt_id, title):
         path = self.file_path()
-        best_audio = pafy_file.getbestaudio()
-        best_audio.download(quiet=True, filepath=path)
-
-
-d = Downloader()
-d.download("https://www.youtube.com/watch?v=oRdxUFDoQe0")
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'quiet': True,
+            'outtmpl': '{}/{}.mp3'.format(path, title),
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }],
+        }
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([yt_id])
